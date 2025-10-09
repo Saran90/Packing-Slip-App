@@ -10,3 +10,4 @@ const emailKey = 'email';
 const nameKey = 'name';
 const profilePicKey = 'profilePic';
 const firmNameKey = 'firmName';
+const isAdminKey = 'isAdmin';

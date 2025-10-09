@@ -1,5 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:get/get_navigation/src/routes/get_route.dart';
+import 'package:packing_slip_app/features/sales/sales_binding.dart';
+import 'package:packing_slip_app/features/sales/sales_screen.dart';
 import 'package:packing_slip_app/utils/routes.dart';
 
 import '../features/login/login_binding.dart';
@@ -23,5 +25,14 @@ final routes = [
           textDirection: TextDirection.ltr,
           child: LoginScreen(),
         ),
+  ),
+  GetPage(
+    name: salesRoute,
+    binding: SalesBinding(),
+    page:
+        () => Directionality(
+      textDirection: TextDirection.ltr,
+      child: SalesScreen(),
+    ),
   ),
 ];

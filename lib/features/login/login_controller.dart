@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:package_info_plus/package_info_plus.dart';
+import 'package:packing_slip_app/utils/routes.dart';
 
 import '../../api/auth/auth_api.dart';
 import '../../api/auth/models/login_request.dart';
@@ -35,7 +36,7 @@ class LoginController extends GetxController {
         ),
       );
       result.fold(
-        (l) {
+            (l) {
           if (l is APIFailure) {
             ErrorResponse? errorResponse = l.error;
             showToast(message: errorResponse?.message ?? apiFailureMessage);
@@ -48,11 +49,12 @@ class LoginController extends GetxController {
           }
           isLoading.value = false;
         },
-        (r) async {
+            (r) async {
           if (r?.token != null) {
             await appStorage.setToken(accessToken: r!.token!, refreshToken: '');
             await appStorage.setFirmName(firmName: r.firmName ?? '');
-            // Get.offAndToNamed(purchaseBillsRoute);
+            await appStorage.setIsAdmin(isAdmin: r.isAdmin ?? false);
+            Get.offAndToNamed(salesRoute);
           } else {
             showToast(message: loginFailedMessage);
           }

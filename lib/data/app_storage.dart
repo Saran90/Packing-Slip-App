@@ -7,8 +7,10 @@ import 'app_storage_keys.dart';
 final box = GetStorage();
 
 class AppStorage {
-
-  Future<void> setToken({required String accessToken, required String refreshToken}) async {
+  Future<void> setToken({
+    required String accessToken,
+    required String refreshToken,
+  }) async {
     await box.write(accessTokenKey, accessToken);
     await box.write(refreshTokenKey, refreshToken);
   }
@@ -22,6 +24,9 @@ class AppStorage {
     await box.write(firmNameKey, firmName);
   }
 
+  Future<void> setIsAdmin({required bool isAdmin}) async {
+    await box.write(isAdminKey, isAdmin);
+  }
 
   Future<void> setLoginStatus({required bool status}) async {
     await box.write(isLoggedInKey, status);
@@ -39,6 +44,11 @@ class AppStorage {
   String? getFirmName() {
     String? firmName = box.read(firmNameKey);
     return firmName;
+  }
+
+  bool? isAdmin() {
+    bool? flag = box.read(isAdminKey);
+    return flag;
   }
 
   Future<void> clear() async {

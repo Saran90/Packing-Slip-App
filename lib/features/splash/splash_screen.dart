@@ -27,7 +27,7 @@ class _SplashScreenState extends State<SplashScreen> {
     );
     Timer(const Duration(seconds: 3), () {
       if ((appStorage.getAccessToken()?.isNotEmpty) ?? false) {
-        // Get.offAndToNamed(purchaseBillsRoute);
+        Get.offAndToNamed(salesRoute);
       } else {
         Get.offAndToNamed(loginRoute);
       }
@@ -72,7 +72,7 @@ class _SplashScreenState extends State<SplashScreen> {
                   ),
                 ),
               ),
-            )
+            ),
           ],
         ),
       ),

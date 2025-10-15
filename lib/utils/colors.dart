@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-const Color appColorGradient1 = Color(0xe2485bda);
-const Color appColorGradient2 = Color(0xe27783d8);
+const Color appColorGradient1 = Color(0xff2b4157);
+const Color appColorGradient2 = Color(0xff4b749f);
 const Color appColorGradient3 = Color(0xe2c5402f);
 const Color appColorGradient4 = Color(0xe2bf746b);
 const Color appColor = Color(0xe2485bda);

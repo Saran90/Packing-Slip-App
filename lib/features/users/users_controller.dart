@@ -1,5 +1,6 @@
-import 'package:flutter/src/widgets/framework.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:packing_slip_app/features/users/allot_series/allot_series_widget.dart';
 import 'package:packing_slip_app/utils/extensions.dart';
 
 import '../../../api/error_response.dart';
@@ -7,6 +8,7 @@ import '../../../data/error/failures.dart';
 import '../../../utils/messages.dart';
 import '../../../utils/utility_functions.dart';
 import '../../api/users/users_api.dart';
+import 'add/add_user_widget.dart';
 import 'models/user.dart';
 
 class UsersController extends GetxController {
@@ -60,13 +62,42 @@ class UsersController extends GetxController {
     );
   }
 
-  Future<void> onUsersClicked(User user) async {
+  Future<void> onUserClicked(User user) async {
+    await showModalBottomSheet(
+      backgroundColor: Colors.transparent,
+      context: Get.context!,
+      isScrollControlled: true,
+      builder: (context) => AddUserWidget(user: user),
+    );
+    loadUsers();
+  }
 
+  Future<void> onAllotSeriesClicked(User user) async {
+    await showModalBottomSheet(
+      backgroundColor: Colors.transparent,
+      context: Get.context!,
+      isScrollControlled: true,
+      builder: (context) => AllotSeriesWidget(user: user),
+    );
+    loadUsers();
   }
 
   void onItemDeleteClicked(User user) {}
 
   void onBackClicked() {
     Get.back();
+  }
+
+  void onAddClicked() {
+    showAddUserWidget();
+  }
+
+  void showAddUserWidget() {
+    showModalBottomSheet(
+      backgroundColor: Colors.transparent,
+      context: Get.context!,
+      isScrollControlled: true,
+      builder: (context) => AddUserWidget(),
+    );
   }
 }

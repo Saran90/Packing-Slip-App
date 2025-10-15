@@ -1,3 +1,14 @@
 const String apiBaseUrl = 'https://packingslip.trademate.co.in';
 const String loginUrl = '/api/auth/login';
 const String salesUrl = '/api/sales';
+const String salesByIdUrl = '/api/sales/GetById';
+const String updateSalesUrl = '/api/sales/update';
+const String getProductByCodeUrl = '/api/products/GetByBarCode';
+const String getAllProductsByCodeUrl = '/api/products/GetAllByBarCode';
+const String getProductsByIdUrl = '/api/products/GetById';
+const String productsUrl = '/api/products';
+const String taxUrl = '/api/tax';
+const String addUserUrl = '/api/users/Save';
+const String allotSeriesUrl = '/api/users/AllotSeries';
+const String getUserByIdUrl = '/api/users/GetById';
+const String getUsersUrl = '/api/users';

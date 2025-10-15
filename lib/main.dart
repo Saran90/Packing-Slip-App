@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:packing_slip_app/api/sales/sales_api.dart';
+import 'package:packing_slip_app/api/users/users_api.dart';
 import 'package:packing_slip_app/utils/pages.dart';
 import 'package:toastification/toastification.dart';
 
@@ -18,6 +19,7 @@ Future<void> main() async {
 Future<void> initializeDependencies() async {
   Get.lazyPut<AuthApi>(() => AuthApi(baseUrl: apiBaseUrl));
   Get.lazyPut<SalesApi>(() => SalesApi(baseUrl: apiBaseUrl));
+  Get.lazyPut<UsersApi>(() => UsersApi(baseUrl: apiBaseUrl));
 }
 
 AppStorage appStorage = AppStorage();

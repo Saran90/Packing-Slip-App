@@ -21,10 +21,12 @@ class SalesController extends GetxController {
   RxInt supplierId = 150.obs;
   RxString firmName = ''.obs;
   RxList<Sales> sales = RxList([]);
+  RxBool isAdmin = RxBool(false);
 
   @override
   void onInit() {
     firmName.value = appStorage.getFirmName() ?? '';
+    isAdmin.value = appStorage.isAdmin() ?? false;
     loadSales();
     super.onInit();
   }
@@ -100,10 +102,15 @@ class SalesController extends GetxController {
           );
         },
       );
+    } else if(value == 1) {
+      Get.toNamed(usersRoute);
     }
   }
 
-  void onSalesClicked(Sales sales) {}
+  Future<void> onSalesClicked(Sales sales) async {
+    await Get.toNamed(salesDetailRoute, arguments: sales.billId);
+    loadSales();
+  }
 
   void onItemDeleteClicked(Sales sales) {}
 }

@@ -24,14 +24,8 @@ class SalesScreen extends StatelessWidget {
         ),
         child: SafeArea(
           child: SizedBox(
-            height: MediaQuery
-                .of(context)
-                .size
-                .height,
-            width: MediaQuery
-                .of(context)
-                .size
-                .width,
+            height: MediaQuery.of(context).size.height,
+            width: MediaQuery.of(context).size.width,
             child: Stack(
               fit: StackFit.loose,
               children: [
@@ -47,17 +41,16 @@ class SalesScreen extends StatelessWidget {
                             alignment: Alignment.center,
                             child: Center(
                               child: Obx(
-                                    () =>
-                                    Text(
-                                      _controller.firmName.value,
-                                      style: TextStyle(
-                                        fontSize: 18,
-                                        fontWeight: FontWeight.w600,
-                                        color: textColor,
-                                        overflow: TextOverflow.ellipsis,
-                                      ),
-                                      maxLines: 2,
-                                    ),
+                                () => Text(
+                                  _controller.firmName.value,
+                                  style: TextStyle(
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.w600,
+                                    color: textColor,
+                                    overflow: TextOverflow.ellipsis,
+                                  ),
+                                  maxLines: 2,
+                                ),
                               ),
                             ),
                           ),
@@ -73,9 +66,36 @@ class SalesScreen extends StatelessWidget {
                               position: PopupMenuPosition.under,
                               onSelected:
                                   (value) =>
-                                  _controller.onMenuClicked(context, value),
+                                      _controller.onMenuClicked(context, value),
                               itemBuilder: (BuildContext bc) {
                                 return [
+                                  if (_controller.isAdmin.value)
+                                    PopupMenuItem(
+                                      padding: EdgeInsets.zero,
+                                      value: 1,
+                                      child: Container(
+                                        height: 44,
+                                        padding: EdgeInsets.zero,
+                                        decoration: const BoxDecoration(
+                                          border: Border(
+                                            bottom: BorderSide(
+                                              color: Colors.black38,
+                                              width: 1,
+                                            ),
+                                          ),
+                                        ),
+                                        child: Center(
+                                          child: Text(
+                                            'Users',
+                                            style: const TextStyle(
+                                              color: Colors.black87,
+                                              fontSize: 14,
+                                              fontWeight: FontWeight.w500,
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    ),
                                   PopupMenuItem(
                                     padding: EdgeInsets.zero,
                                     value: 0,
@@ -128,41 +148,35 @@ class SalesScreen extends StatelessWidget {
                       const SizedBox(height: 30),
                       Expanded(
                         child: Obx(
-                              () =>
-                              ListView.builder(
-                                itemCount: _controller.sales.length,
-                                itemBuilder:
-                                    (context, index) =>
-                                    InkWell(
-                                      onTap:
-                                          () =>
-                                          _controller.onSalesClicked(
-                                            _controller.sales[index],
-                                          ),
-                                      child: SalesItemWidget(
-                                        sales:
+                          () => ListView.builder(
+                            itemCount: _controller.sales.length,
+                            itemBuilder:
+                                (context, index) => InkWell(
+                                  onTap:
+                                      () => _controller.onSalesClicked(
                                         _controller.sales[index],
-                                        onDeleteClicked:
-                                            () =>
-                                            _controller.onItemDeleteClicked(
-                                              _controller.sales[index],
-                                            ),
                                       ),
-                                    ),
-                              ),
+                                  child: SalesItemWidget(
+                                    sales: _controller.sales[index],
+                                    onDeleteClicked:
+                                        () => _controller.onItemDeleteClicked(
+                                          _controller.sales[index],
+                                        ),
+                                  ),
+                                ),
+                          ),
                         ),
                       ),
                     ],
                   ),
                 ),
                 Obx(
-                      () =>
-                      Visibility(
-                        visible: _controller.isLoading.value,
-                        child: Center(
-                          child: CircularProgressIndicator(color: Colors.white),
-                        ),
-                      ),
+                  () => Visibility(
+                    visible: _controller.isLoading.value,
+                    child: Center(
+                      child: CircularProgressIndicator(color: Colors.white),
+                    ),
+                  ),
                 ),
               ],
             ),

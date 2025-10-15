@@ -9,7 +9,10 @@ class IconTextField extends StatefulWidget {
     required this.controller,
     required this.whiteBackground,
     this.icon,
+    this.height,
+    this.width,
     this.focusNode,
+    this.bottomPadding,
     this.suffixIcon,
     this.label,
     this.formatters,
@@ -33,6 +36,9 @@ class IconTextField extends StatefulWidget {
   final TextInputType textInputType;
   final bool whiteBackground;
   final FocusNode? focusNode;
+  final double? height;
+  final double? width;
+  final double? bottomPadding;
 
   @override
   State<IconTextField> createState() => _IconTextFieldState();
@@ -54,7 +60,8 @@ class _IconTextFieldState extends State<IconTextField> {
             borderRadius: BorderRadius.circular(10),
             color: widget.whiteBackground ? Color(0xFFF5F5F5) : Colors.white10,
           ),
-          height: widget.isMultiLine ? 100 : 50,
+          height: widget.isMultiLine ? 100 : widget.height ?? 50,
+          width: widget.width ?? double.infinity,
           child: Row(
             crossAxisAlignment:
                 widget.isMultiLine
@@ -91,7 +98,7 @@ class _IconTextFieldState extends State<IconTextField> {
                 child:
                     widget.isMultiLine
                         ? TextFormField(
-                      focusNode: widget.focusNode,
+                          focusNode: widget.focusNode,
                           enabled: widget.isEnabled,
                           cursorColor:
                               widget.whiteBackground
@@ -126,28 +133,16 @@ class _IconTextFieldState extends State<IconTextField> {
                             border: InputBorder.none,
                           ),
                         )
-                        : TextFormField(
-                      focusNode: widget.focusNode,
-                      enabled: widget.isEnabled,
-                          cursorColor:
-                              widget.whiteBackground
-                                  ? Color(0x61000000)
-                                  : Colors.white,
-                          style: TextStyle(
-                            color:
+                        : SizedBox(
+                          height: widget.height,
+                          child: TextFormField(
+                            focusNode: widget.focusNode,
+                            enabled: widget.isEnabled,
+                            cursorColor:
                                 widget.whiteBackground
                                     ? Color(0x61000000)
                                     : Colors.white,
-                            fontSize: 14,
-                            fontWeight: FontWeight.w400,
-                          ),
-                          controller: widget.controller,
-                          obscureText: widget.isPassword ? !isVisible : false,
-                          keyboardType: widget.textInputType,
-                          inputFormatters: widget.formatters,
-                          decoration: InputDecoration(
-                            hintText: widget.hint,
-                            hintStyle: TextStyle(
+                            style: TextStyle(
                               color:
                                   widget.whiteBackground
                                       ? Color(0x61000000)
@@ -155,10 +150,27 @@ class _IconTextFieldState extends State<IconTextField> {
                               fontSize: 14,
                               fontWeight: FontWeight.w400,
                             ),
-                            contentPadding: const EdgeInsets.symmetric(
-                              horizontal: 10,
+                            controller: widget.controller,
+                            obscureText: widget.isPassword ? !isVisible : false,
+                            keyboardType: widget.textInputType,
+                            inputFormatters: widget.formatters,
+                            decoration: InputDecoration(
+                              hintText: widget.hint,
+                              hintStyle: TextStyle(
+                                color:
+                                    widget.whiteBackground
+                                        ? Color(0x61000000)
+                                        : Colors.white,
+                                fontSize: 14,
+                                fontWeight: FontWeight.w400,
+                              ),
+                              contentPadding: EdgeInsets.only(
+                                left: 10,
+                                right: 10,
+                                bottom: widget.bottomPadding ?? 0,
+                              ),
+                              border: InputBorder.none,
                             ),
-                            border: InputBorder.none,
                           ),
                         ),
               ),

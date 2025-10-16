@@ -684,7 +684,7 @@ class SalesDetailScreen extends StatelessWidget {
                                                   ),
                                                   Visibility(
                                                     visible:
-                                                        element.isNew ?? false,
+                                                        element.billDetailId == 0,
                                                     child: Align(
                                                       alignment:
                                                           Alignment.topRight,

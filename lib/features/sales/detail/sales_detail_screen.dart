@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:packing_slip_app/features/sales/detail/sales_detail_controller.dart';
 import 'package:packing_slip_app/features/sales/sales_controller.dart';
 import 'package:packing_slip_app/features/sales/widgets/sales_item_widget.dart';
+import 'package:packing_slip_app/utils/extensions.dart';
 import 'package:packing_slip_app/utils/messages.dart';
 import '../../../core/widgets/app_button.dart';
 import '../../../core/widgets/icon_text_field.dart';
@@ -244,7 +245,7 @@ class SalesDetailScreen extends StatelessWidget {
                                         () => Text(
                                           '$rupeeIcon ${_controller.sales.value?.billAmount?.toString() ?? '---'}',
                                           style: TextStyle(
-                                            fontSize: 20,
+                                            fontSize: 16,
                                             fontWeight: FontWeight.w700,
                                             color: Colors.white,
                                           ),
@@ -255,6 +256,43 @@ class SalesDetailScreen extends StatelessWidget {
                                   ),
                                 ),
                                 const SizedBox(width: 20),
+                                Expanded(
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        'Bill date',
+                                        style: TextStyle(
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.w400,
+                                          color: Colors.white,
+                                        ),
+                                      ),
+                                      const SizedBox(height: 10),
+                                      Obx(
+                                        () => Text(
+                                          _controller.sales.value?.billDate
+                                                  ?.toDDMMYYYY() ??
+                                              '---',
+                                          style: TextStyle(
+                                            fontSize: 16,
+                                            fontWeight: FontWeight.w700,
+                                            color: Colors.white,
+                                          ),
+                                          maxLines: 2,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ],
+                            ),
+                            const SizedBox(height: 20),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
                                 Expanded(
                                   child: IconTextField(
                                     controller: _controller.casesController,
@@ -276,6 +314,8 @@ class SalesDetailScreen extends StatelessWidget {
                                     ],
                                   ),
                                 ),
+                                const SizedBox(width: 20),
+                                Expanded(child: SizedBox()),
                               ],
                             ),
                             const SizedBox(height: 40),
@@ -306,7 +346,31 @@ class SalesDetailScreen extends StatelessWidget {
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                Expanded(child: SizedBox()),
+                                Expanded(
+                                  child: Obx(() => Text.rich(
+                                    TextSpan(
+                                      children: [
+                                        TextSpan(
+                                          text: 'Completed: ',
+                                          style: TextStyle(
+                                            fontSize: 14,
+                                            fontWeight: FontWeight.w400,
+                                            color: Colors.white,
+                                          ),
+                                        ),
+                                        TextSpan(
+                                          text:
+                                          '${_controller.items.where((p0) => p0.isCompleted).length}/${_controller.items.length}',
+                                          style: TextStyle(
+                                            fontSize: 18,
+                                            fontWeight: FontWeight.w700,
+                                            color: Colors.white,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),),
+                                ),
                                 const SizedBox(width: 20),
                                 Expanded(
                                   child: AppButton(
@@ -684,7 +748,8 @@ class SalesDetailScreen extends StatelessWidget {
                                                   ),
                                                   Visibility(
                                                     visible:
-                                                        element.billDetailId == 0,
+                                                        element.billDetailId ==
+                                                        0,
                                                     child: Align(
                                                       alignment:
                                                           Alignment.topRight,

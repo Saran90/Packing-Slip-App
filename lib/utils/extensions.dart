@@ -17,7 +17,7 @@ extension StringExtension on String {
 
 extension DateTimeExtension on DateTime {
   String toDDMMYYYY() {
-    DateFormat dateFormat = DateFormat('dd-MM-yyyy');
+    DateFormat dateFormat = DateFormat('dd/MM/yyyy');
     return dateFormat.format(this);
   }
 

@@ -171,7 +171,7 @@ class SalesDetailController extends GetxController {
       },
       (r) {
         if (r != null) {
-          showToast(message: 'Sales updated', type: ToastificationType.success);
+          showToast(message: 'Sales bill ${sales.value?.series}-${sales.value?.billNumber} updated', type: ToastificationType.success);
           Get.back();
         } else {
           showToast(message: networkFailureMessage);

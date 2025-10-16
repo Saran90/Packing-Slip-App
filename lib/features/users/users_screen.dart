@@ -3,7 +3,6 @@ import 'package:get/get.dart';
 import 'package:packing_slip_app/features/users/users_controller.dart';
 import 'package:packing_slip_app/features/users/widgets/user_item_widget.dart';
 import '../../../utils/colors.dart';
-import '../../core/widgets/app_button.dart';
 
 class UsersScreen extends StatelessWidget {
   UsersScreen({super.key});
@@ -119,6 +118,18 @@ class UsersScreen extends StatelessWidget {
                     visible: _controller.isLoading.value,
                     child: Center(
                       child: CircularProgressIndicator(color: Colors.white),
+                    ),
+                  ),
+                ),
+                Obx(
+                      () => Visibility(
+                    visible: _controller.noData.value,
+                    child: Center(
+                      child: Text('No data available', style: TextStyle(
+                          fontSize: 14,
+                          fontWeight: FontWeight.w400,
+                          color: textColor
+                      ),),
                     ),
                   ),
                 ),

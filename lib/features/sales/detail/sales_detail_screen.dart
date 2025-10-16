@@ -108,7 +108,9 @@ class SalesDetailScreen extends StatelessWidget {
                                       const SizedBox(height: 5),
                                       Obx(
                                         () => Text(
-                                          '${_controller.sales.value?.billId}',
+                                          _controller.sales.value?.billId
+                                                  ?.toString() ??
+                                              '---',
                                           style: TextStyle(
                                             fontSize: 16,
                                             fontWeight: FontWeight.w700,
@@ -136,7 +138,9 @@ class SalesDetailScreen extends StatelessWidget {
                                       const SizedBox(height: 5),
                                       Obx(
                                         () => Text(
-                                          '${_controller.sales.value?.billNumber}',
+                                          _controller.sales.value?.billNumber
+                                                  ?.toString() ??
+                                              '---',
                                           style: TextStyle(
                                             fontSize: 16,
                                             fontWeight: FontWeight.w700,
@@ -170,7 +174,11 @@ class SalesDetailScreen extends StatelessWidget {
                                       const SizedBox(height: 5),
                                       Obx(
                                         () => Text(
-                                          '${_controller.sales.value?.customerName}',
+                                          _controller
+                                                  .sales
+                                                  .value
+                                                  ?.customerName ??
+                                              '---',
                                           style: TextStyle(
                                             fontSize: 16,
                                             fontWeight: FontWeight.w700,
@@ -199,7 +207,8 @@ class SalesDetailScreen extends StatelessWidget {
                                       const SizedBox(height: 5),
                                       Obx(
                                         () => Text(
-                                          '${_controller.sales.value?.series}',
+                                          _controller.sales.value?.series ??
+                                              '---',
                                           style: TextStyle(
                                             fontSize: 16,
                                             fontWeight: FontWeight.w700,
@@ -233,7 +242,7 @@ class SalesDetailScreen extends StatelessWidget {
                                       const SizedBox(height: 10),
                                       Obx(
                                         () => Text(
-                                          '$rupeeIcon ${_controller.sales.value?.billAmount}',
+                                          '$rupeeIcon ${_controller.sales.value?.billAmount?.toString() ?? '---'}',
                                           style: TextStyle(
                                             fontSize: 20,
                                             fontWeight: FontWeight.w700,
@@ -321,306 +330,315 @@ class SalesDetailScreen extends StatelessWidget {
                                             style: TextStyle(color: textColor),
                                           ),
                                         )
-                                        : Expanded(
-                                          child: Column(
-                                            children: [
-                                              ..._controller.items.map(
-                                                (element) => Stack(
-                                                  children: [
-                                                    InkWell(
-                                                      onTap: () => _controller.onItemClicked(element),
-                                                      child: Container(
-                                                        decoration: BoxDecoration(
-                                                          borderRadius:
-                                                              BorderRadius.circular(
-                                                                10,
+                                        : Column(
+                                          children: [
+                                            ..._controller.items.map(
+                                              (element) => Stack(
+                                                children: [
+                                                  InkWell(
+                                                    onTap:
+                                                        () => _controller
+                                                            .onItemClicked(
+                                                              element,
+                                                            ),
+                                                    child: Container(
+                                                      decoration: BoxDecoration(
+                                                        borderRadius:
+                                                            BorderRadius.circular(
+                                                              10,
+                                                            ),
+                                                        color: Colors.white10,
+                                                      ),
+                                                      padding: EdgeInsets.all(
+                                                        15,
+                                                      ),
+                                                      margin: EdgeInsets.only(
+                                                        bottom: 10,
+                                                      ),
+                                                      child: Column(
+                                                        children: [
+                                                          const SizedBox(
+                                                            height: 15,
+                                                          ),
+                                                          Row(
+                                                            mainAxisAlignment:
+                                                                MainAxisAlignment
+                                                                    .spaceBetween,
+                                                            crossAxisAlignment:
+                                                                CrossAxisAlignment
+                                                                    .start,
+                                                            children: [
+                                                              Expanded(
+                                                                child: Text(
+                                                                  element.productName ??
+                                                                      '',
+                                                                  style: TextStyle(
+                                                                    fontSize:
+                                                                        15,
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .w600,
+                                                                    color:
+                                                                        Colors
+                                                                            .white,
+                                                                  ),
+                                                                  maxLines: 2,
+                                                                ),
                                                               ),
-                                                          color: Colors.white10,
-                                                        ),
-                                                        padding: EdgeInsets.all(
-                                                          15,
-                                                        ),
-                                                        margin: EdgeInsets.only(
-                                                          bottom: 10,
-                                                        ),
-                                                        child: Column(
-                                                          children: [
-                                                            const SizedBox(
-                                                              height: 5,
-                                                            ),
-                                                            Row(
-                                                              mainAxisAlignment:
-                                                                  MainAxisAlignment
-                                                                      .spaceBetween,
-                                                              crossAxisAlignment:
-                                                                  CrossAxisAlignment
-                                                                      .start,
-                                                              children: [
-                                                                Expanded(
-                                                                  child: Text(
-                                                                    element.productName ??
-                                                                        '',
-                                                                    style: TextStyle(
-                                                                      fontSize:
-                                                                          15,
-                                                                      fontWeight:
-                                                                          FontWeight
-                                                                              .w600,
+                                                              const SizedBox(
+                                                                width: 10,
+                                                              ),
+                                                              Expanded(
+                                                                child: Text(
+                                                                  '$rupeeIcon ${element.mrp}',
+                                                                  style: TextStyle(
+                                                                    fontSize:
+                                                                        18,
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .w700,
+                                                                    color:
+                                                                        Colors
+                                                                            .white,
+                                                                  ),
+                                                                  textAlign:
+                                                                      TextAlign
+                                                                          .right,
+                                                                ),
+                                                              ),
+                                                            ],
+                                                          ),
+                                                          const SizedBox(
+                                                            height: 10,
+                                                          ),
+                                                          Row(
+                                                            mainAxisAlignment:
+                                                                MainAxisAlignment
+                                                                    .spaceBetween,
+                                                            children: [
+                                                              Expanded(
+                                                                child: Row(
+                                                                  children: [
+                                                                    Text(
+                                                                      'Order Qty: ',
+                                                                      style: TextStyle(
+                                                                        fontSize:
+                                                                            12,
+                                                                        fontWeight:
+                                                                            FontWeight.w400,
+                                                                        color:
+                                                                            Colors.white,
+                                                                      ),
+                                                                    ),
+                                                                    const SizedBox(
+                                                                      width: 5,
+                                                                    ),
+                                                                    Text(
+                                                                      '${element.orderQty}',
+                                                                      style: TextStyle(
+                                                                        fontSize:
+                                                                            14,
+                                                                        fontWeight:
+                                                                            FontWeight.w700,
+                                                                        color:
+                                                                            Colors.white,
+                                                                      ),
+                                                                    ),
+                                                                  ],
+                                                                ),
+                                                              ),
+                                                              const SizedBox(
+                                                                width: 10,
+                                                              ),
+                                                              Expanded(
+                                                                child: Row(
+                                                                  children: [
+                                                                    Text(
+                                                                      'Packed Qty: ',
+                                                                      style: TextStyle(
+                                                                        fontSize:
+                                                                            12,
+                                                                        fontWeight:
+                                                                            FontWeight.w400,
+                                                                        color:
+                                                                            Colors.white,
+                                                                      ),
+                                                                    ),
+                                                                    const SizedBox(
+                                                                      width: 5,
+                                                                    ),
+                                                                    Expanded(
+                                                                      child: IconTextField(
+                                                                        hint:
+                                                                            '',
+                                                                        height:
+                                                                            30,
+                                                                        bottomPadding:
+                                                                            12,
+                                                                        controller:
+                                                                            element.packedController ??
+                                                                            TextEditingController(),
+                                                                        whiteBackground:
+                                                                            false,
+                                                                      ),
+                                                                    ),
+                                                                  ],
+                                                                ),
+                                                              ),
+                                                            ],
+                                                          ),
+                                                          const SizedBox(
+                                                            height: 10,
+                                                          ),
+                                                          Row(
+                                                            mainAxisAlignment:
+                                                                MainAxisAlignment
+                                                                    .spaceBetween,
+                                                            children: [
+                                                              Expanded(
+                                                                flex: 2,
+                                                                child: CheckboxListTile(
+                                                                  side: WidgetStateBorderSide.resolveWith((
+                                                                    Set<
+                                                                      WidgetState
+                                                                    >
+                                                                    states,
+                                                                  ) {
+                                                                    if (states.contains(
+                                                                      WidgetState
+                                                                          .selected,
+                                                                    )) {
+                                                                      return const BorderSide(
+                                                                        color:
+                                                                            appColorGradient1,
+                                                                      );
+                                                                    }
+                                                                    return const BorderSide(
                                                                       color:
                                                                           Colors
                                                                               .white,
+                                                                    );
+                                                                  }),
+                                                                  title: Transform.translate(
+                                                                    offset:
+                                                                        const Offset(
+                                                                          -20,
+                                                                          0,
+                                                                        ),
+                                                                    child: Text(
+                                                                      'Loosely Packed?',
+                                                                      style: TextStyle(
+                                                                        fontSize:
+                                                                            12,
+                                                                        fontWeight:
+                                                                            FontWeight.w500,
+                                                                        color:
+                                                                            Colors.white,
+                                                                      ),
                                                                     ),
-                                                                    maxLines: 2,
                                                                   ),
+                                                                  contentPadding:
+                                                                      EdgeInsets
+                                                                          .zero,
+                                                                  controlAffinity:
+                                                                      ListTileControlAffinity
+                                                                          .leading,
+                                                                  checkColor:
+                                                                      appColorGradient1,
+                                                                  activeColor:
+                                                                      Colors
+                                                                          .white,
+                                                                  value:
+                                                                      element
+                                                                          .isLooselyPacked,
+                                                                  onChanged:
+                                                                      (
+                                                                        value,
+                                                                      ) => _controller.onLooselyPackedChanged(
+                                                                        element,
+                                                                        value,
+                                                                      ),
                                                                 ),
-                                                                const SizedBox(
-                                                                  width: 10,
-                                                                ),
-                                                                Expanded(
-                                                                  child: Text(
-                                                                    '$rupeeIcon ${element.mrp}',
-                                                                    style: TextStyle(
-                                                                      fontSize:
-                                                                          18,
-                                                                      fontWeight:
-                                                                          FontWeight
-                                                                              .w700,
+                                                              ),
+                                                              const SizedBox(
+                                                                width: 10,
+                                                              ),
+                                                              Expanded(
+                                                                flex: 2,
+                                                                child: CheckboxListTile(
+                                                                  side: WidgetStateBorderSide.resolveWith((
+                                                                    Set<
+                                                                      WidgetState
+                                                                    >
+                                                                    states,
+                                                                  ) {
+                                                                    if (states.contains(
+                                                                      WidgetState
+                                                                          .selected,
+                                                                    )) {
+                                                                      return const BorderSide(
+                                                                        color:
+                                                                            appColorGradient1,
+                                                                      );
+                                                                    }
+                                                                    return const BorderSide(
                                                                       color:
                                                                           Colors
                                                                               .white,
-                                                                    ),
-                                                                    textAlign:
-                                                                        TextAlign
-                                                                            .right,
-                                                                  ),
-                                                                ),
-                                                              ],
-                                                            ),
-                                                            const SizedBox(
-                                                              height: 10,
-                                                            ),
-                                                            Row(
-                                                              mainAxisAlignment:
-                                                                  MainAxisAlignment
-                                                                      .spaceBetween,
-                                                              children: [
-                                                                Expanded(
-                                                                  child: Row(
-                                                                    children: [
-                                                                      Text(
-                                                                        'Order Qty: ',
-                                                                        style: TextStyle(
-                                                                          fontSize:
-                                                                              12,
-                                                                          fontWeight:
-                                                                              FontWeight.w400,
-                                                                          color:
-                                                                              Colors.white,
+                                                                    );
+                                                                  }),
+                                                                  contentPadding:
+                                                                      EdgeInsets
+                                                                          .zero,
+                                                                  title: Transform.translate(
+                                                                    offset:
+                                                                        const Offset(
+                                                                          -20,
+                                                                          0,
                                                                         ),
-                                                                      ),
-                                                                      const SizedBox(
-                                                                        width: 5,
-                                                                      ),
-                                                                      Text(
-                                                                        '${element.orderQty}',
-                                                                        style: TextStyle(
-                                                                          fontSize:
-                                                                              14,
-                                                                          fontWeight:
-                                                                              FontWeight.w700,
-                                                                          color:
-                                                                              Colors.white,
-                                                                        ),
-                                                                      ),
-                                                                    ],
-                                                                  ),
-                                                                ),
-                                                                const SizedBox(
-                                                                  width: 10,
-                                                                ),
-                                                                Expanded(
-                                                                  child: Row(
-                                                                    children: [
-                                                                      Text(
-                                                                        'Packed Qty: ',
-                                                                        style: TextStyle(
-                                                                          fontSize:
-                                                                              12,
-                                                                          fontWeight:
-                                                                              FontWeight.w400,
-                                                                          color:
-                                                                              Colors.white,
-                                                                        ),
-                                                                      ),
-                                                                      const SizedBox(
-                                                                        width: 5,
-                                                                      ),
-                                                                      Expanded(
-                                                                        child: IconTextField(
-                                                                          hint:
-                                                                              '',
-                                                                          height:
-                                                                              30,
-                                                                          bottomPadding:
-                                                                              12,
-                                                                          controller:
-                                                                              element.packedController ??
-                                                                              TextEditingController(),
-                                                                          whiteBackground:
-                                                                              false,
-                                                                        ),
-                                                                      ),
-                                                                    ],
-                                                                  ),
-                                                                ),
-                                                              ],
-                                                            ),
-                                                            const SizedBox(
-                                                              height: 10,
-                                                            ),
-                                                            Row(
-                                                              mainAxisAlignment:
-                                                                  MainAxisAlignment
-                                                                      .spaceBetween,
-                                                              children: [
-                                                                Expanded(
-                                                                  flex: 2,
-                                                                  child: CheckboxListTile(
-                                                                    side: WidgetStateBorderSide.resolveWith((
-                                                                      Set<
-                                                                        WidgetState
-                                                                      >
-                                                                      states,
-                                                                    ) {
-                                                                      if (states.contains(
-                                                                        WidgetState
-                                                                            .selected,
-                                                                      )) {
-                                                                        return const BorderSide(
-                                                                          color:
-                                                                              appColorGradient1,
-                                                                        );
-                                                                      }
-                                                                      return const BorderSide(
+                                                                    child: Text(
+                                                                      'Completed?',
+                                                                      style: TextStyle(
+                                                                        fontSize:
+                                                                            12,
+                                                                        fontWeight:
+                                                                            FontWeight.w500,
                                                                         color:
-                                                                            Colors
-                                                                                .white,
-                                                                      );
-                                                                    }),
-                                                                    title: Transform.translate(
-                                                                      offset:
-                                                                          const Offset(
-                                                                            -20,
-                                                                            0,
-                                                                          ),
-                                                                      child: Text(
-                                                                        'Loosely Packed?',
-                                                                        style: TextStyle(
-                                                                          fontSize:
-                                                                              12,
-                                                                          fontWeight:
-                                                                              FontWeight.w500,
-                                                                          color:
-                                                                              Colors.white,
-                                                                        ),
+                                                                            Colors.white,
                                                                       ),
                                                                     ),
-                                                                    contentPadding:
-                                                                        EdgeInsets
-                                                                            .zero,
-                                                                    controlAffinity:
-                                                                        ListTileControlAffinity
-                                                                            .leading,
-                                                                    checkColor:
-                                                                        appColorGradient1,
-                                                                    activeColor:
-                                                                        Colors
-                                                                            .white,
-                                                                    value:
-                                                                        element
-                                                                            .isLooselyPacked,
-                                                                    onChanged:
-                                                                        (
-                                                                          value,
-                                                                        ) => _controller.onLooselyPackedChanged(
-                                                                          element,
-                                                                          value,
-                                                                        ),
                                                                   ),
-                                                                ),
-                                                                const SizedBox(
-                                                                  width: 10,
-                                                                ),
-                                                                Expanded(
-                                                                  flex: 2,
-                                                                  child: CheckboxListTile(
-                                                                    side: WidgetStateBorderSide.resolveWith((
-                                                                      Set<
-                                                                        WidgetState
-                                                                      >
-                                                                      states,
-                                                                    ) {
-                                                                      if (states.contains(
-                                                                        WidgetState
-                                                                            .selected,
-                                                                      )) {
-                                                                        return const BorderSide(
-                                                                          color:
-                                                                              appColorGradient1,
-                                                                        );
-                                                                      }
-                                                                      return const BorderSide(
-                                                                        color:
-                                                                            Colors
-                                                                                .white,
-                                                                      );
-                                                                    }),
-                                                                    contentPadding:
-                                                                        EdgeInsets
-                                                                            .zero,
-                                                                    title: Transform.translate(
-                                                                      offset:
-                                                                          const Offset(
-                                                                            -20,
-                                                                            0,
-                                                                          ),
-                                                                      child: Text(
-                                                                        'Completed?',
-                                                                        style: TextStyle(
-                                                                          fontSize:
-                                                                              12,
-                                                                          fontWeight:
-                                                                              FontWeight.w500,
-                                                                          color:
-                                                                              Colors.white,
-                                                                        ),
+                                                                  controlAffinity:
+                                                                      ListTileControlAffinity
+                                                                          .leading,
+                                                                  checkColor:
+                                                                      appColorGradient1,
+                                                                  activeColor:
+                                                                      Colors
+                                                                          .white,
+                                                                  value:
+                                                                      element
+                                                                          .isCompleted,
+                                                                  onChanged:
+                                                                      (
+                                                                        value,
+                                                                      ) => _controller.onIsCompleteChanged(
+                                                                        element,
+                                                                        value,
                                                                       ),
-                                                                    ),
-                                                                    controlAffinity:
-                                                                        ListTileControlAffinity
-                                                                            .leading,
-                                                                    checkColor:
-                                                                        appColorGradient1,
-                                                                    activeColor:
-                                                                        Colors
-                                                                            .white,
-                                                                    value:
-                                                                        element
-                                                                            .isCompleted,
-                                                                    onChanged:
-                                                                        (
-                                                                          value,
-                                                                        ) => _controller.onIsCompleteChanged(
-                                                                          element,
-                                                                          value,
-                                                                        ),
-                                                                  ),
                                                                 ),
-                                                                const SizedBox(
-                                                                  width: 10,
-                                                                ),
-                                                                Expanded(
-                                                                  flex: 1,
+                                                              ),
+                                                              const SizedBox(
+                                                                width: 10,
+                                                              ),
+                                                              Expanded(
+                                                                flex: 1,
+                                                                child: InkWell(
+                                                                  onTap:
+                                                                      () => _controller
+                                                                          .onBarcodeClicked(
+                                                                            element,
+                                                                          ),
                                                                   child: Image.asset(
                                                                     'assets/icons/ic_barcode.png',
                                                                     width: 30,
@@ -630,36 +648,99 @@ class SalesDetailScreen extends StatelessWidget {
                                                                             .white,
                                                                   ),
                                                                 ),
-                                                              ],
-                                                            ),
-                                                          ],
-                                                        ),
+                                                              ),
+                                                            ],
+                                                          ),
+                                                        ],
                                                       ),
                                                     ),
-                                                    Align(
-                                                      alignment:
-                                                          Alignment.topLeft,
-                                                      child: Container(
-                                                        color: Colors.yellow,
-                                                        width: 20,
-                                                        child: Center(
-                                                          child: Text(
-                                                            '${element.rowNumber}',
-                                                            style: TextStyle(
-                                                              fontSize: 11,
-                                                              color:
-                                                                  Colors
-                                                                      .black87,
+                                                  ),
+                                                  Align(
+                                                    alignment:
+                                                        Alignment.topLeft,
+                                                    child: Container(
+                                                      decoration: BoxDecoration(
+                                                        borderRadius:
+                                                            BorderRadius.circular(
+                                                              5,
                                                             ),
+                                                        color: Colors.yellow,
+                                                      ),
+                                                      width: 25,
+                                                      height: 20,
+                                                      child: Center(
+                                                        child: Text(
+                                                          '${element.rowNumber}',
+                                                          style: TextStyle(
+                                                            fontSize: 12,
+                                                            fontWeight:
+                                                                FontWeight.w500,
+                                                            color:
+                                                                Colors.black87,
                                                           ),
                                                         ),
                                                       ),
                                                     ),
-                                                  ],
-                                                ),
+                                                  ),
+                                                  Visibility(
+                                                    visible:
+                                                        element.isNew ?? false,
+                                                    child: Align(
+                                                      alignment:
+                                                          Alignment.topRight,
+                                                      child: InkWell(
+                                                        onTap:
+                                                            () => _controller
+                                                                .onItemDeleteClicked(
+                                                                  element,
+                                                                ),
+                                                        child: Container(
+                                                          decoration: BoxDecoration(
+                                                            borderRadius:
+                                                                BorderRadius.circular(
+                                                                  5,
+                                                                ),
+                                                            color: Colors.red,
+                                                          ),
+                                                          width: 75,
+                                                          height: 25,
+                                                          child: Row(
+                                                            mainAxisAlignment:
+                                                                MainAxisAlignment
+                                                                    .center,
+                                                            children: [
+                                                              Icon(
+                                                                Icons.delete,
+                                                                color:
+                                                                    Colors
+                                                                        .white,
+                                                                size: 15,
+                                                              ),
+                                                              const SizedBox(
+                                                                width: 5,
+                                                              ),
+                                                              Text(
+                                                                'Delete',
+                                                                style: TextStyle(
+                                                                  color:
+                                                                      Colors
+                                                                          .white,
+                                                                  fontSize: 12,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w500,
+                                                                ),
+                                                              ),
+                                                            ],
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ],
                                               ),
-                                            ],
-                                          ),
+                                            ),
+                                          ],
                                         ),
                               ),
                             ),

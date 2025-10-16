@@ -14,6 +14,7 @@ import 'models/user.dart';
 class UsersController extends GetxController {
   final UsersApi usersApi = Get.find();
   RxBool isLoading = false.obs;
+  RxBool noData = false.obs;
   RxList<User> users = RxList([]);
 
   @override
@@ -33,6 +34,9 @@ class UsersController extends GetxController {
         } else if (l is ServerFailure) {
           showToast(message: l.message ?? serverFailureMessage);
         } else if (l is AuthFailure) {
+        } else if (l is NoDataFailure) {
+          users.value = [];
+          noData.value = true;
         } else if (l is NetworkFailure) {
           showToast(message: networkFailureMessage);
         } else {
@@ -54,6 +58,7 @@ class UsersController extends GetxController {
                   )
                   .toList() ??
               [];
+          noData.value = false;
         } else {
           showToast(message: networkFailureMessage);
         }
@@ -92,12 +97,13 @@ class UsersController extends GetxController {
     showAddUserWidget();
   }
 
-  void showAddUserWidget() {
-    showModalBottomSheet(
+  Future<void> showAddUserWidget() async {
+    await showModalBottomSheet(
       backgroundColor: Colors.transparent,
       context: Get.context!,
       isScrollControlled: true,
       builder: (context) => AddUserWidget(),
     );
+    loadUsers();
   }
 }

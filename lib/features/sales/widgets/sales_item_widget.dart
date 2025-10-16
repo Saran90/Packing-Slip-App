@@ -8,11 +8,11 @@ class SalesItemWidget extends StatelessWidget {
   const SalesItemWidget({
     super.key,
     required this.sales,
-    required this.onDeleteClicked,
+    required this.onResetClicked,
   });
 
   final Sales sales;
-  final Function() onDeleteClicked;
+  final Function() onResetClicked;
 
   @override
   Widget build(BuildContext context) {
@@ -21,11 +21,11 @@ class SalesItemWidget extends StatelessWidget {
         motion: ScrollMotion(),
         children: [
           SlidableAction(
-            onPressed: (context) => onDeleteClicked(),
+            onPressed: (context) => onResetClicked(),
             backgroundColor: Colors.white,
-            foregroundColor: Colors.red,
-            icon: Icons.delete,
-            label: 'Delete',
+            foregroundColor: Colors.black87,
+            icon: Icons.reset_tv,
+            label: 'Reset',
           ),
         ],
       ),

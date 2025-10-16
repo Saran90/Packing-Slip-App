@@ -22,6 +22,7 @@ class SalesController extends GetxController {
   RxString firmName = ''.obs;
   RxList<Sales> sales = RxList([]);
   RxBool isAdmin = RxBool(false);
+  RxBool noData = RxBool(false);
 
   @override
   void onInit() {
@@ -44,6 +45,9 @@ class SalesController extends GetxController {
         } else if (l is AuthFailure) {
         } else if (l is NetworkFailure) {
           showToast(message: networkFailureMessage);
+        } else if (l is NoDataFailure) {
+          sales.value = [];
+          noData.value = true;
         } else {
           showToast(message: unknownFailureMessage);
         }
@@ -66,6 +70,7 @@ class SalesController extends GetxController {
                   )
                   .toList() ??
               [];
+          noData.value = false;
         } else {
           showToast(message: networkFailureMessage);
         }
@@ -74,7 +79,7 @@ class SalesController extends GetxController {
     );
   }
 
-  void onMenuClicked(BuildContext context, int value) {
+  Future<void> onMenuClicked(BuildContext context, int value) async {
     if (value == 0) {
       showDialog(
         context: Get.context!,
@@ -102,8 +107,9 @@ class SalesController extends GetxController {
           );
         },
       );
-    } else if(value == 1) {
-      Get.toNamed(usersRoute);
+    } else if (value == 1) {
+      await Get.toNamed(usersRoute);
+      loadSales();
     }
   }
 
@@ -112,5 +118,33 @@ class SalesController extends GetxController {
     loadSales();
   }
 
-  void onItemDeleteClicked(Sales sales) {}
+  Future<void> onItemResetClicked(int? billId) async {
+    isLoading.value = true;
+    var result = await salesApi.resetSales(billId: billId);
+    result.fold(
+      (l) {
+        if (l is APIFailure) {
+          ErrorResponse? errorResponse = l.error;
+          showToast(message: errorResponse?.message ?? apiFailureMessage);
+        } else if (l is ServerFailure) {
+          showToast(message: l.message ?? serverFailureMessage);
+        } else if (l is AuthFailure) {
+        } else if (l is NetworkFailure) {
+          showToast(message: networkFailureMessage);
+        } else {
+          showToast(message: unknownFailureMessage);
+        }
+        isLoading.value = false;
+      },
+      (r) {
+        if (r != null) {
+          showToast(message: r.message ?? '', type: ToastificationType.success);
+          loadSales();
+        } else {
+          showToast(message: networkFailureMessage);
+        }
+        isLoading.value = false;
+      },
+    );
+  }
 }

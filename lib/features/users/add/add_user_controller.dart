@@ -6,6 +6,7 @@ import 'package:packing_slip_app/api/users/users_api.dart';
 import 'package:packing_slip_app/features/users/models/user.dart';
 import 'package:packing_slip_app/utils/extensions.dart';
 import 'package:packing_slip_app/utils/utility_functions.dart';
+import 'package:toastification/toastification.dart';
 
 import '../../../api/error_response.dart';
 import '../../../data/error/failures.dart';
@@ -49,6 +50,7 @@ class AddUserController extends GetxController {
             message:
                 r?.message ??
                 (user.value == null ? 'User added' : 'User updated'),
+            type: ToastificationType.success
           );
           isLoading.value = false;
           Get.back();
@@ -88,7 +90,9 @@ class AddUserController extends GetxController {
   }
 
   void setUser(User? value) {
-    user.value = value;
-    getUserById();
+    if(value != null) {
+      user.value = value;
+      getUserById();
+    }
   }
 }

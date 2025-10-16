@@ -3,6 +3,7 @@ const String loginUrl = '/api/auth/login';
 const String salesUrl = '/api/sales';
 const String salesByIdUrl = '/api/sales/GetById';
 const String updateSalesUrl = '/api/sales/update';
+const String resetSalesUrl = '/api/sales/reset';
 const String getProductByCodeUrl = '/api/products/GetByBarCode';
 const String getAllProductsByCodeUrl = '/api/products/GetAllByBarCode';
 const String getProductsByIdUrl = '/api/products/GetById';

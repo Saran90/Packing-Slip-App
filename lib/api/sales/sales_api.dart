@@ -3,6 +3,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 import 'package:packing_slip_app/api/sales/models/get_sales_by_id_response.dart';
+import 'package:packing_slip_app/api/sales/models/reset_sales_response.dart';
 import 'package:packing_slip_app/api/sales/models/sales_response.dart';
 import 'package:packing_slip_app/api/sales/models/update_sales_response.dart';
 
@@ -103,6 +104,37 @@ class SalesApi extends ApiClient {
       debugPrint('Update Sales Call: $exception');
       if (exception is DioException) {
         debugPrint('Update Sales Exception: ${exception.message}');
+        ErrorResponse? errorResponse = ErrorResponse.fromJson(
+          exception.response?.data,
+        );
+        return Left(APIFailure<ErrorResponse>(error: errorResponse));
+      }
+      return Left(ServerFailure(message: exception.toString()));
+    }
+  }
+
+  Future<Either<Failure, ResetSalesResponse?>> resetSales({
+    required int? billId,
+  }) async {
+    try {
+      var response = await post('$resetSalesUrl?BillId=$billId',{});
+      if (response.isOk) {
+        ResetSalesResponse salesResponse = ResetSalesResponse.fromJson(
+          response.body,
+        );
+        return Right(salesResponse);
+      } else if (response.statusCode == 401) {
+        return Left(AuthFailure());
+      } else if (response.statusCode == 404) {
+        return Left(NoDataFailure());
+      } else {
+        ErrorResponse? errorResponse = ErrorResponse.fromJson(response.body);
+        return Left(APIFailure<ErrorResponse>(error: errorResponse));
+      }
+    } catch (exception) {
+      debugPrint('Reset Sales Call: $exception');
+      if (exception is DioException) {
+        debugPrint('Reset Sales Exception: ${exception.message}');
         ErrorResponse? errorResponse = ErrorResponse.fromJson(
           exception.response?.data,
         );

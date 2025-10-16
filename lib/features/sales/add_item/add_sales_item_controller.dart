@@ -24,7 +24,7 @@ class AddSalesItemController extends GetxController {
   final mrpController = TextEditingController();
   final totalItemsController = TextEditingController();
   final quantityController = TextEditingController();
-  final SalesApi purchaseApi = Get.find();
+  final SalesApi salesApi = Get.find();
 
   Rx<ProductItem?> selectedProductItem = Rx<ProductItem?>(null);
   RxList<ProductItem?> selectedProductItems = RxList<ProductItem?>();
@@ -85,7 +85,7 @@ class AddSalesItemController extends GetxController {
     if (pattern.isEmpty || pattern.length < 3) {
       return [];
     }
-    var result = await purchaseApi.getProducts(name: pattern);
+    var result = await salesApi.getProducts(name: pattern);
     result.fold(
       (l) {
         productItems.value = [];
@@ -190,6 +190,7 @@ class AddSalesItemController extends GetxController {
               orderQty: salesItem.value?.orderQty ?? 0,
               packedQty: quantityController.text.toInt() ?? 0,
               billDetailId: salesItem.value?.billDetailId ?? 0,
+              isNew: true,
               productId:
                   isEdit.value
                       ? productId.value
@@ -213,7 +214,7 @@ class AddSalesItemController extends GetxController {
 
   Future<void> getProductByBarcode(String res) async {
     isLoading.value = false;
-    var result = await purchaseApi.getProductByBarcode(res);
+    var result = await salesApi.getProductByBarcode(res);
     result.fold(
       (l) {
         if (l is APIFailure) {
@@ -254,7 +255,7 @@ class AddSalesItemController extends GetxController {
 
   Future<void> getAllProductsByBarcode(String res) async {
     isLoading.value = false;
-    var result = await purchaseApi.getAllProductsByBarcode(res);
+    var result = await salesApi.getAllProductsByBarcode(res);
     result.fold(
       (l) {
         if (l is APIFailure) {
@@ -334,7 +335,7 @@ class AddSalesItemController extends GetxController {
 
   Future<void> _getProductById(int id) async {
     isLoading.value = false;
-    var result = await purchaseApi.getProductsById(id);
+    var result = await salesApi.getProductsById(id);
     result.fold(
       (l) {
         if (l is APIFailure) {

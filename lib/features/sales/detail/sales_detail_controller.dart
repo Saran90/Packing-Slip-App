@@ -2,8 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:get/get.dart';
 import 'package:packing_slip_app/api/sales/models/update_sales_request.dart';
+import 'package:packing_slip_app/features/sales/models/product_item.dart';
 import 'package:packing_slip_app/features/sales/models/sales.dart';
+import 'package:packing_slip_app/main.dart';
 import 'package:packing_slip_app/utils/extensions.dart';
+import 'package:simple_barcode_scanner/simple_barcode_scanner.dart';
 import 'package:toastification/toastification.dart';
 
 import '../../../api/error_response.dart';
@@ -123,7 +126,7 @@ class SalesDetailController extends GetxController {
     isLoading.value = true;
     var result = await salesApi.updateSales(
       request: UpdateSalesRequest(
-        userId: sales.value?.userId,
+        userId: appStorage.getId(),
         billId: sales.value?.billId,
         billAmount: sales.value?.billAmount,
         billNumber: sales.value?.billNumber,
@@ -136,7 +139,7 @@ class SalesDetailController extends GetxController {
             items
                 .map(
                   (e) => Items(
-                    billId: e.billId,
+                    billId: sales.value?.billId,
                     billDetailId: e.billDetailId,
                     isCompleted: e.isCompleted,
                     isLooselyPacked: e.isLooselyPacked,
@@ -272,5 +275,118 @@ class SalesDetailController extends GetxController {
         : completedItems < items.length
         ? 1
         : 2;
+  }
+
+  Future<void> getAllProductsByBarcode(String res, SalesItem item) async {
+    isLoading.value = false;
+    var result = await salesApi.getAllProductsByBarcode(res);
+    result.fold(
+      (l) {
+        if (l is APIFailure) {
+          ErrorResponse? errorResponse = l.error;
+          showToast(message: errorResponse?.message ?? apiFailureMessage);
+        } else if (l is ServerFailure) {
+          showToast(message: l.message ?? serverFailureMessage);
+        } else if (l is AuthFailure) {
+        } else if (l is NetworkFailure) {
+          showToast(message: networkFailureMessage);
+        } else if (l is NoDataFailure) {
+        } else {
+          showToast(message: unknownFailureMessage);
+        }
+        isLoading.value = false;
+      },
+      (r) {
+        if (r != null) {
+          List<ProductItem> items =
+              r.dataList
+                  ?.map(
+                    (e) => ProductItem(
+                      id: e.productId?.toInt() ?? 0,
+                      name: e.productName ?? '',
+                      mrp: e.mrp?.toDouble() ?? 0,
+                      packing: e.packing ?? '',
+                      barCode: e.barCode ?? '',
+                      availableMrps:
+                          e.batchesList
+                              ?.map((e) => e.mrp?.toDouble() ?? 0)
+                              .toList() ??
+                          [],
+                    ),
+                  )
+                  .toList() ??
+              [];
+          var selectedItem = items.firstWhereOrNull(
+            (element) =>
+                ((element.id == item.productId) && (element.mrp == item.mrp)),
+          );
+          if (selectedItem != null) {
+            showDialog(
+              context: Get.context!,
+              builder: (BuildContext context) {
+                return AlertDialog(
+                  title: Text("Product Check"),
+                  content: Text("Valid product"),
+                  actions: [
+                    TextButton(
+                      child: Text("Ok"),
+                      onPressed: () {
+                        Get.back();
+                      },
+                    ),
+                  ],
+                );
+              },
+            );
+          } else {
+            showDialog(
+              context: Get.context!,
+              builder: (BuildContext context) {
+                return AlertDialog(
+                  title: Text("Product Check"),
+                  content: Text("Product not found"),
+                  actions: [
+                    TextButton(
+                      child: Text("Ok"),
+                      onPressed: () {
+                        Get.back();
+                      },
+                    ),
+                  ],
+                );
+              },
+            );
+          }
+        } else {}
+        isLoading.value = false;
+      },
+    );
+  }
+
+  Future<void> onBarcodeClicked(SalesItem element) async {
+    String? res = await SimpleBarcodeScanner.scanBarcode(
+      Get.context!,
+      barcodeAppBar: const BarcodeAppBar(
+        appBarTitle: 'Barcode',
+        centerTitle: false,
+        enableBackButton: true,
+        backButtonIcon: Icon(Icons.arrow_back_ios),
+      ),
+      isShowFlashIcon: true,
+      delayMillis: 2000,
+      cameraFace: CameraFace.back,
+    );
+    if (res != null) {
+      if (res == '-1') {
+        res = '';
+      }
+      if (res.isNotEmpty) {
+        getAllProductsByBarcode(res, element);
+      }
+    }
+  }
+
+  void onItemDeleteClicked(SalesItem element) {
+    items.removeWhere((e) => e.rowNumber == element.rowNumber);
   }
 }

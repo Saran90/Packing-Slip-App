@@ -36,7 +36,8 @@ class AllotSeriesController extends GetxController {
   }
 
   Future<void> onSaveClicked() async {
-    if (seriesController.text.isNotEmpty) {
+    if (seriesController.text.isNotEmpty &&
+        billDateController.text.isNotEmpty) {
       isLoading.value = true;
       var result = await usersApi.allotSeries(
         request: AllotSeriesRequest(

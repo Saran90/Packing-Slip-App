@@ -24,6 +24,10 @@ class AppStorage {
     await box.write(firmNameKey, firmName);
   }
 
+  Future<void> setId({required int id}) async {
+    await box.write(idKey, id);
+  }
+
   Future<void> setIsAdmin({required bool isAdmin}) async {
     await box.write(isAdminKey, isAdmin);
   }
@@ -39,6 +43,11 @@ class AppStorage {
   String? getRefreshToken() {
     String? refreshToken = box.read(refreshTokenKey);
     return refreshToken;
+  }
+
+  int? getId() {
+    int? id = box.read(idKey);
+    return id;
   }
 
   String? getFirmName() {

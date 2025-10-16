@@ -19,18 +19,18 @@ class UserItemWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Slidable(
-      endActionPane: ActionPane(
-        motion: ScrollMotion(),
-        children: [
-          SlidableAction(
-            onPressed: (context) => onDeleteClicked(),
-            backgroundColor: Colors.white,
-            foregroundColor: Colors.red,
-            icon: Icons.delete,
-            label: 'Delete',
-          ),
-        ],
-      ),
+      // endActionPane: ActionPane(
+      //   motion: ScrollMotion(),
+      //   children: [
+      //     SlidableAction(
+      //       onPressed: (context) => onDeleteClicked(),
+      //       backgroundColor: Colors.white,
+      //       foregroundColor: Colors.red,
+      //       icon: Icons.delete,
+      //       label: 'Delete',
+      //     ),
+      //   ],
+      // ),
       child: Container(
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10),
@@ -81,13 +81,16 @@ class UserItemWidget extends StatelessWidget {
                                 maxLines: 2,
                                 overflow: TextOverflow.ellipsis,
                               ),
-                              const SizedBox(width: 10,),
+                              const SizedBox(width: 10),
                               InkWell(
                                 onTap: () => onAllotClicked(user),
                                 child: Container(
                                   decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(10),
-                                    border: Border.all(color: Colors.white, width: 1),
+                                    border: Border.all(
+                                      color: Colors.white,
+                                      width: 1,
+                                    ),
                                   ),
                                   padding: EdgeInsets.symmetric(
                                     horizontal: 20,
@@ -102,7 +105,7 @@ class UserItemWidget extends StatelessWidget {
                                     ),
                                   ),
                                 ),
-                              )
+                              ),
                             ],
                           ),
                           const SizedBox(height: 5),
@@ -123,7 +126,7 @@ class UserItemWidget extends StatelessWidget {
                                         ),
                                       ),
                                       TextSpan(
-                                        text: '${user.billDate?.toDDMMYYYY()}',
+                                        text: user.billDate?.toDDMMYYYY()??'---',
                                         style: TextStyle(
                                           fontSize: 14,
                                           fontWeight: FontWeight.w600,
@@ -149,7 +152,10 @@ class UserItemWidget extends StatelessWidget {
                                       ),
                                     ),
                                     TextSpan(
-                                      text: (user.series?.isNotEmpty ?? false)?'${user.series}':'---',
+                                      text:
+                                          (user.series?.isNotEmpty ?? false)
+                                              ? '${user.series}'
+                                              : '---',
                                       style: TextStyle(
                                         fontSize: 14,
                                         fontWeight: FontWeight.w600,

@@ -158,9 +158,9 @@ class SalesScreen extends StatelessWidget {
                                       ),
                                   child: SalesItemWidget(
                                     sales: _controller.sales[index],
-                                    onDeleteClicked:
-                                        () => _controller.onItemDeleteClicked(
-                                          _controller.sales[index],
+                                    onResetClicked:
+                                        () => _controller.onItemResetClicked(
+                                          _controller.sales[index].billId,
                                         ),
                                   ),
                                 ),
@@ -175,6 +175,18 @@ class SalesScreen extends StatelessWidget {
                     visible: _controller.isLoading.value,
                     child: Center(
                       child: CircularProgressIndicator(color: Colors.white),
+                    ),
+                  ),
+                ),
+                Obx(
+                  () => Visibility(
+                    visible: _controller.noData.value,
+                    child: Center(
+                      child: Text('No data available', style: TextStyle(
+                        fontSize: 14,
+                        fontWeight: FontWeight.w400,
+                        color: textColor
+                      ),),
                     ),
                   ),
                 ),

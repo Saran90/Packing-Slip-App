@@ -84,6 +84,9 @@ class SalesDetailController extends GetxController {
           );
           casesController.text = sales.value?.cases?.toString() ?? '';
           items.value = sales.value?.items ?? [];
+          for (int i = 0; i < items.length; i++) {
+            items[i].packedController?.text = items[i].packedQty.toString();
+          }
         } else {
           showToast(message: networkFailureMessage);
         }
@@ -171,7 +174,11 @@ class SalesDetailController extends GetxController {
       },
       (r) {
         if (r != null) {
-          showToast(message: 'Sales bill ${sales.value?.series}-${sales.value?.billNumber} updated', type: ToastificationType.success);
+          showToast(
+            message:
+                'Sales bill ${sales.value?.series}-${sales.value?.billNumber} updated',
+            type: ToastificationType.success,
+          );
           Get.back();
         } else {
           showToast(message: networkFailureMessage);
@@ -392,7 +399,7 @@ class SalesDetailController extends GetxController {
         Get.back();
         items.removeWhere((e) => e.rowNumber == element.rowNumber);
         for (int i = 0; i < items.length; i++) {
-          if(items[i].isNew??false) {
+          if (items[i].isNew ?? false) {
             items[i].rowNumber = i + 1;
           }
         }
@@ -403,7 +410,10 @@ class SalesDetailController extends GetxController {
     );
   }
 
-  void showDeleteConfirmation(Function() onOkClicked, Function() onCancelClicked) {
+  void showDeleteConfirmation(
+    Function() onOkClicked,
+    Function() onCancelClicked,
+  ) {
     showDialog(
       context: Get.context!,
       builder: (BuildContext context) {

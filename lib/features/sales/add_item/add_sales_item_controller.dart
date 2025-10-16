@@ -166,44 +166,48 @@ class AddSalesItemController extends GetxController {
   }
 
   void onSaved() {
-    if (nameController.text.isNotEmpty) {
-      if (mrpController.text.isNotEmpty) {
-        if ((quantityController.text.isEmpty ||
-            quantityController.text == '0')) {
-          showToast(message: 'Quantity cannot be empty or 0');
+    if(selectedProductItem.value != null) {
+      if (nameController.text.isNotEmpty) {
+        if (mrpController.text.isNotEmpty) {
+          if ((quantityController.text.isEmpty ||
+              quantityController.text == '0')) {
+            showToast(message: 'Quantity cannot be empty or 0');
+          } else {
+            int? row = int.tryParse(rowController.text);
+            Get.back(
+              result: SalesItem(
+                tempId: tempId.value ?? DateTime.now().millisecondsSinceEpoch,
+                productName: nameController.text,
+                packaging: packagingController.text,
+                barcode: barcodeController.text,
+                price: mrpController.text.toDouble() ?? 0,
+                quantity: quantityController.text.toInt() ?? 0,
+                rowNumber: row ?? 0,
+                billId: salesItem.value?.billId,
+                mrp: mrpController.text.toDouble() ?? 0,
+                isLooselyPacked: salesItem.value?.isLooselyPacked ?? false,
+                isCompleted: salesItem.value?.isCompleted ?? false,
+                orderQty: salesItem.value?.orderQty ?? 0,
+                packedQty: quantityController.text.toInt() ?? 0,
+                billDetailId: salesItem.value?.billDetailId ?? 0,
+                isNew: true,
+                productId:
+                isEdit.value
+                    ? productId.value
+                    : selectedProductItem.value?.id,
+                packedController:
+                salesItem.value?.packedController ?? TextEditingController(),
+              ),
+            );
+          }
         } else {
-          int? row = int.tryParse(rowController.text);
-          Get.back(
-            result: SalesItem(
-              tempId: tempId.value ?? DateTime.now().millisecondsSinceEpoch,
-              productName: nameController.text,
-              packaging: packagingController.text,
-              barcode: barcodeController.text,
-              price: mrpController.text.toDouble() ?? 0,
-              quantity: quantityController.text.toInt() ?? 0,
-              rowNumber: row ?? 0,
-              billId: salesItem.value?.billId,
-              mrp: mrpController.text.toDouble() ?? 0,
-              isLooselyPacked: salesItem.value?.isLooselyPacked ?? false,
-              isCompleted: salesItem.value?.isCompleted ?? false,
-              orderQty: salesItem.value?.orderQty ?? 0,
-              packedQty: quantityController.text.toInt() ?? 0,
-              billDetailId: salesItem.value?.billDetailId ?? 0,
-              isNew: true,
-              productId:
-                  isEdit.value
-                      ? productId.value
-                      : selectedProductItem.value?.id,
-              packedController:
-                  salesItem.value?.packedController ?? TextEditingController(),
-            ),
-          );
+          showToast(message: 'MRP should not be empty');
         }
       } else {
-        showToast(message: 'MRP should not be empty');
+        showToast(message: 'Name should not be empty');
       }
     } else {
-      showToast(message: 'Name should not be empty');
+      showToast(message: 'Select a valid product');
     }
   }
 

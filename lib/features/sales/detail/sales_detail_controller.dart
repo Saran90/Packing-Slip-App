@@ -326,7 +326,7 @@ class SalesDetailController extends GetxController {
               builder: (BuildContext context) {
                 return AlertDialog(
                   title: Text("Product Check"),
-                  content: Text("Valid product"),
+                  content: Text("Item matching"),
                   actions: [
                     TextButton(
                       child: Text("Ok"),
@@ -344,7 +344,7 @@ class SalesDetailController extends GetxController {
               builder: (BuildContext context) {
                 return AlertDialog(
                   title: Text("Product Check"),
-                  content: Text("Product not found"),
+                  content: Text("Item not matching"),
                   actions: [
                     TextButton(
                       child: Text("Ok"),

@@ -388,5 +388,10 @@ class SalesDetailController extends GetxController {
 
   void onItemDeleteClicked(SalesItem element) {
     items.removeWhere((e) => e.rowNumber == element.rowNumber);
+    for (int i = 0; i < items.length; i++) {
+      if(items[i].isNew??false) {
+        items[i].rowNumber = i + 1;
+      }
+    }
   }
 }

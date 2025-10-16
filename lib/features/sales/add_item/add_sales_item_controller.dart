@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get_storage/get_storage.dart';
 import 'package:packing_slip_app/utils/extensions.dart';
 import 'package:simple_barcode_scanner/simple_barcode_scanner.dart';
 

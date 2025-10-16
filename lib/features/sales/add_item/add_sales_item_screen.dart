@@ -191,35 +191,6 @@ class AddSalesItemScreen extends StatelessWidget {
                             children: [
                               Expanded(
                                 child: IconTextField(
-                                  controller: _controller.rowController,
-                                  hint: 'Enter row number',
-                                  textInputType:
-                                      TextInputType.numberWithOptions(
-                                        signed: false,
-                                        decimal: false,
-                                      ),
-                                  whiteBackground: false,
-                                  label: 'Row Number',
-                                  formatters: [
-                                    FilteringTextInputFormatter.allow(
-                                      RegExp(r'(^\d*\d*)'),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              const SizedBox(width: 10),
-                            ],
-                          ),
-                        ],
-                      ),
-                      const SizedBox(height: 20),
-                      Stack(
-                        children: [
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Expanded(
-                                child: IconTextField(
                                   focusNode: _controller.quantityFocusNode,
                                   controller: _controller.quantityController,
                                   hint: 'Enter quantity',

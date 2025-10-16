@@ -387,11 +387,45 @@ class SalesDetailController extends GetxController {
   }
 
   void onItemDeleteClicked(SalesItem element) {
-    items.removeWhere((e) => e.rowNumber == element.rowNumber);
-    for (int i = 0; i < items.length; i++) {
-      if(items[i].isNew??false) {
-        items[i].rowNumber = i + 1;
-      }
-    }
+    showDeleteConfirmation(
+      () {
+        Get.back();
+        items.removeWhere((e) => e.rowNumber == element.rowNumber);
+        for (int i = 0; i < items.length; i++) {
+          if(items[i].isNew??false) {
+            items[i].rowNumber = i + 1;
+          }
+        }
+      },
+      () {
+        Get.back();
+      },
+    );
+  }
+
+  void showDeleteConfirmation(Function() onOkClicked, Function() onCancelClicked) {
+    showDialog(
+      context: Get.context!,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text("Delete item"),
+          content: Text("Do you want to delete this item?"),
+          actions: [
+            TextButton(
+              child: Text("Cancel"),
+              onPressed: () {
+                onCancelClicked();
+              },
+            ),
+            TextButton(
+              child: Text("Ok"),
+              onPressed: () {
+                onOkClicked();
+              },
+            ),
+          ],
+        );
+      },
+    );
   }
 }

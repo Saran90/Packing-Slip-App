@@ -79,7 +79,7 @@ class SalesItemWidget extends StatelessWidget {
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 Text(
-                                  '${sales.billNumber}',
+                                  '${sales.series}-${sales.billNumber}',
                                   style: TextStyle(
                                     fontSize: 15,
                                     fontWeight: FontWeight.w500,

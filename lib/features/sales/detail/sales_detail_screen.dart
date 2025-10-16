@@ -303,13 +303,13 @@ class SalesDetailScreen extends StatelessWidget {
                                     textInputType:
                                         TextInputType.numberWithOptions(
                                           signed: false,
-                                          decimal: true,
+                                          decimal: false,
                                         ),
                                     whiteBackground: false,
                                     label: 'Cases',
                                     formatters: [
                                       FilteringTextInputFormatter.allow(
-                                        RegExp(r'(^\d*\.?\d*)'),
+                                        RegExp(r'(^\d*)'),
                                       ),
                                     ],
                                   ),
@@ -537,6 +537,7 @@ class SalesDetailScreen extends StatelessWidget {
                                                                             '',
                                                                         height:
                                                                             30,
+                                                                        onChanged: (p0) => _controller.onPackedQtyUpdated(element,p0),
                                                                         bottomPadding:
                                                                             12,
                                                                         controller:
@@ -544,6 +545,16 @@ class SalesDetailScreen extends StatelessWidget {
                                                                             TextEditingController(),
                                                                         whiteBackground:
                                                                             false,
+                                                                        formatters: [
+                                                                          FilteringTextInputFormatter.allow(
+                                                                            RegExp(r'(^\d*)'),
+                                                                          ),
+                                                                        ],
+                                                                        textInputType:
+                                                                        TextInputType.numberWithOptions(
+                                                                          signed: false,
+                                                                          decimal: false,
+                                                                        ),
                                                                       ),
                                                                     ),
                                                                   ],
@@ -700,7 +711,7 @@ class SalesDetailScreen extends StatelessWidget {
                                                                 child: InkWell(
                                                                   onTap:
                                                                       () => _controller
-                                                                          .onBarcodeClicked(
+                                                                          .onBarcodeClicked(context,
                                                                             element,
                                                                           ),
                                                                   child: Image.asset(

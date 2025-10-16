@@ -14,6 +14,7 @@ class IconTextField extends StatefulWidget {
     this.focusNode,
     this.bottomPadding,
     this.suffixIcon,
+    this.onChanged,
     this.label,
     this.formatters,
     this.textColor = Colors.white,
@@ -39,6 +40,7 @@ class IconTextField extends StatefulWidget {
   final double? height;
   final double? width;
   final double? bottomPadding;
+  final Function(String)? onChanged;
 
   @override
   State<IconTextField> createState() => _IconTextFieldState();
@@ -104,6 +106,7 @@ class _IconTextFieldState extends State<IconTextField> {
                               widget.whiteBackground
                                   ? Color(0x61000000)
                                   : Colors.white,
+                          onChanged: widget.onChanged,
                           style: TextStyle(
                             color:
                                 widget.whiteBackground
@@ -138,6 +141,7 @@ class _IconTextFieldState extends State<IconTextField> {
                           child: TextFormField(
                             focusNode: widget.focusNode,
                             enabled: widget.isEnabled,
+                            onChanged: widget.onChanged,
                             cursorColor:
                                 widget.whiteBackground
                                     ? Color(0x61000000)

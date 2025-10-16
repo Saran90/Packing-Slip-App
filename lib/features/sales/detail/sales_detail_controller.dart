@@ -284,7 +284,11 @@ class SalesDetailController extends GetxController {
         : 2;
   }
 
-  Future<void> getAllProductsByBarcode(String res, SalesItem item) async {
+  Future<void> getAllProductsByBarcode(
+    BuildContext context,
+    String res,
+    SalesItem item,
+  ) async {
     isLoading.value = false;
     var result = await salesApi.getAllProductsByBarcode(res);
     result.fold(
@@ -298,6 +302,26 @@ class SalesDetailController extends GetxController {
         } else if (l is NetworkFailure) {
           showToast(message: networkFailureMessage);
         } else if (l is NoDataFailure) {
+          showDialog(
+            context: context,
+            builder: (BuildContext context) {
+              return AlertDialog(
+                title: Text("Product Check"),
+                content: Text(
+                  "Item not matching",
+                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
+                ),
+                actions: [
+                  TextButton(
+                    child: Text("Ok"),
+                    onPressed: () {
+                      Get.back();
+                    },
+                  ),
+                ],
+              );
+            },
+          );
         } else {
           showToast(message: unknownFailureMessage);
         }
@@ -329,11 +353,14 @@ class SalesDetailController extends GetxController {
           );
           if (selectedItem != null) {
             showDialog(
-              context: Get.context!,
+              context: context,
               builder: (BuildContext context) {
                 return AlertDialog(
                   title: Text("Product Check"),
-                  content: Text("Item matching"),
+                  content: Text(
+                    "Item matching",
+                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
+                  ),
                   actions: [
                     TextButton(
                       child: Text("Ok"),
@@ -347,11 +374,14 @@ class SalesDetailController extends GetxController {
             );
           } else {
             showDialog(
-              context: Get.context!,
+              context: context,
               builder: (BuildContext context) {
                 return AlertDialog(
                   title: Text("Product Check"),
-                  content: Text("Item not matching"),
+                  content: Text(
+                    "Item not matching",
+                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
+                  ),
                   actions: [
                     TextButton(
                       child: Text("Ok"),
@@ -370,7 +400,7 @@ class SalesDetailController extends GetxController {
     );
   }
 
-  Future<void> onBarcodeClicked(SalesItem element) async {
+  Future<void> onBarcodeClicked(BuildContext context, SalesItem element) async {
     String? res = await SimpleBarcodeScanner.scanBarcode(
       Get.context!,
       barcodeAppBar: const BarcodeAppBar(
@@ -388,7 +418,7 @@ class SalesDetailController extends GetxController {
         res = '';
       }
       if (res.isNotEmpty) {
-        getAllProductsByBarcode(res, element);
+        getAllProductsByBarcode(context, res, element);
       }
     }
   }
@@ -438,4 +468,26 @@ class SalesDetailController extends GetxController {
       },
     );
   }
+
+  void onPackedQtyUpdated(SalesItem element, String p0) {
+    if ((p0.toInt() ?? 0) > 0) {
+      if(!element.isCompleted) {
+        int index = items
+            .map((e) => e.productId)
+            .toList()
+            .indexOf(element.productId);
+        items[index].isCompleted = true;
+      }
+    } else {
+      if(element.isCompleted) {
+        int index = items
+            .map((e) => e.productId)
+            .toList()
+            .indexOf(element.productId);
+        items[index].isCompleted = false;
+      }
+    }
+    items.refresh();
+  }
+
 }

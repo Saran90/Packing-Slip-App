@@ -137,13 +137,38 @@ class SalesScreen extends StatelessWidget {
                         ],
                       ),
                       const SizedBox(height: 30),
-                      Text(
-                        'Sales Bills',
-                        style: TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.w600,
-                          color: textColor,
-                        ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            'Sales Bills',
+                            style: TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.w600,
+                              color: textColor,
+                            ),
+                          ),
+                          Row(
+                            children: [
+                              Text(
+                                'Completed: ',
+                                style: TextStyle(
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w400,
+                                  color: textColor,
+                                ),
+                              ),
+                              Obx(() => Text(
+                                '${_controller.completedBills.value}/${_controller.sales.length}',
+                                style: TextStyle(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w700,
+                                  color: textColor,
+                                ),
+                              ),)
+                            ],
+                          ),
+                        ],
                       ),
                       const SizedBox(height: 30),
                       Expanded(
@@ -182,11 +207,14 @@ class SalesScreen extends StatelessWidget {
                   () => Visibility(
                     visible: _controller.noData.value,
                     child: Center(
-                      child: Text('No data available', style: TextStyle(
-                        fontSize: 14,
-                        fontWeight: FontWeight.w400,
-                        color: textColor
-                      ),),
+                      child: Text(
+                        'No data available',
+                        style: TextStyle(
+                          fontSize: 14,
+                          fontWeight: FontWeight.w400,
+                          color: textColor,
+                        ),
+                      ),
                     ),
                   ),
                 ),

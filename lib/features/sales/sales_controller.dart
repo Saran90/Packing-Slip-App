@@ -23,6 +23,7 @@ class SalesController extends GetxController {
   RxList<Sales> sales = RxList([]);
   RxBool isAdmin = RxBool(false);
   RxBool noData = RxBool(false);
+  RxInt completedBills = RxInt(0);
 
   @override
   void onInit() {
@@ -70,6 +71,7 @@ class SalesController extends GetxController {
                   )
                   .toList() ??
               [];
+          completedBills.value = sales.where((element) => element.status == 2).length;
           noData.value = false;
         } else {
           showToast(message: networkFailureMessage);

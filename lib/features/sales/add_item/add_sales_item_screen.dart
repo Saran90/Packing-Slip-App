@@ -135,6 +135,7 @@ class AddSalesItemScreen extends StatelessWidget {
                                   hint: 'Enter packing',
                                   textInputType: TextInputType.text,
                                   whiteBackground: false,
+                                  isEnabled: false,
                                   label: 'Packing',
                                 ),
                               ),

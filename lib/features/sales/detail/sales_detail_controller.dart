@@ -100,11 +100,13 @@ class SalesDetailController extends GetxController {
   }
 
   Future<void> onAddClicked() async {
-    var item =
-        await Get.toNamed(addSalesItemRoute, arguments: [null, items.length])
-            as SalesItem?;
-    onItemAdded(item);
-    Get.focusScope?.unfocus();
+    if(!isLoading.value) {
+      var item =
+      await Get.toNamed(addSalesItemRoute, arguments: [null, items.length])
+      as SalesItem?;
+      onItemAdded(item);
+      Get.focusScope?.unfocus();
+    }
   }
 
   void onIsCompleteChanged(SalesItem item, bool? value) {
@@ -113,6 +115,9 @@ class SalesDetailController extends GetxController {
         .toList()
         .indexOf(item.productId);
     items[index].isCompleted = value ?? false;
+    if(!(value??false)) {
+      items[index].packedController?.text = '';
+    }
     items.refresh();
   }
 

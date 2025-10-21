@@ -125,7 +125,7 @@ class SalesDetailController extends GetxController {
     items.refresh();
   }
 
-  Future<void> onSaveClicked() async {
+  Future<void> callSalesApi() async {
     isLoading.value = true;
     var result = await salesApi.updateSales(
       request: UpdateSalesRequest(
@@ -188,6 +188,18 @@ class SalesDetailController extends GetxController {
     );
   }
 
+  Future<void> onSaveClicked() async {
+    if (sales.value?.items?.any((element) => element.isCompleted == false) ??
+        false) {
+      showIncompleteSalesDialog(() {
+        Get.back();
+        callSalesApi();
+      });
+    } else {
+      callSalesApi();
+    }
+  }
+
   void onItemAdded(SalesItem? item) {
     if (item != null) {
       if (_isAlreadyAdded(item)) {
@@ -244,6 +256,26 @@ class SalesDetailController extends GetxController {
         return AlertDialog(
           title: Text("Duplicate Product"),
           content: Text("Item with same mrp already in the list"),
+          actions: [
+            TextButton(
+              child: Text("Ok"),
+              onPressed: () {
+                onOkClicked();
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  void showIncompleteSalesDialog(Function() onOkClicked) {
+    showDialog(
+      context: Get.context!,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text("Sales Bill"),
+          content: Text("Incomplete items found"),
           actions: [
             TextButton(
               child: Text("Ok"),
@@ -471,7 +503,7 @@ class SalesDetailController extends GetxController {
 
   void onPackedQtyUpdated(SalesItem element, String p0) {
     if ((p0.toInt() ?? 0) > 0) {
-      if(!element.isCompleted) {
+      if (!element.isCompleted) {
         int index = items
             .map((e) => e.productId)
             .toList()
@@ -479,7 +511,7 @@ class SalesDetailController extends GetxController {
         items[index].isCompleted = true;
       }
     } else {
-      if(element.isCompleted) {
+      if (element.isCompleted) {
         int index = items
             .map((e) => e.productId)
             .toList()
@@ -489,5 +521,4 @@ class SalesDetailController extends GetxController {
     }
     items.refresh();
   }
-
 }

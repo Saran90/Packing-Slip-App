@@ -38,7 +38,7 @@ class AllotSeriesWidget extends StatelessWidget {
                 Align(
                   alignment: Alignment.center,
                   child: Text(
-                    user == null ? 'Add User' : 'Update User',
+                    'Allot Series',
                     style: const TextStyle(
                       fontSize: 21,
                       fontWeight: FontWeight.w700,

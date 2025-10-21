@@ -95,8 +95,14 @@ class SalesDetailController extends GetxController {
     );
   }
 
-  void onBackClicked() {
-    Get.back();
+  void onBackClicked(BuildContext context) {
+    showUnsavedDataDialog(context, () {
+      Get.back();
+      Get.back();
+    },() {
+      Get.back();
+      onSaveClicked();
+    },);
   }
 
   Future<void> onAddClicked() async {
@@ -267,6 +273,28 @@ class SalesDetailController extends GetxController {
               onPressed: () {
                 onOkClicked();
               },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  void showUnsavedDataDialog(BuildContext context, Function() onNoClicked, Function() onYesClicked) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text("Save Bill"),
+          content: Text("Save Changes?"),
+          actions: [
+            TextButton(
+              onPressed: onNoClicked,
+              child: Text("No"),
+            ),
+            TextButton(
+              onPressed: onYesClicked,
+              child: Text("Yes"),
             ),
           ],
         );

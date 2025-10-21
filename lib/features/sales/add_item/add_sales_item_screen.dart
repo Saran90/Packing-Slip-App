@@ -140,44 +140,28 @@ class AddSalesItemScreen extends StatelessWidget {
                                 ),
                               ),
                               const SizedBox(width: 10),
-                              (_controller.selectedProductItem.value
-                                          ?.hasMutipleMrps() ??
-                                      false)
+                              _controller.isEdit.value
                                   ? Expanded(
-                                    child: Obx(
-                                      () => AutocompleteTextField<double>(
-                                        controller: _controller.mrpController,
-                                        getSuggestions:
-                                            _controller.getProductMrps,
-                                        onSelected: _controller.onMrpSelected,
-                                        suggestions: _controller.productMrps,
-                                        selectedValue:
-                                            _controller.selectedMrp.value,
-                                        label: 'MRP',
-                                        formatters: [
-                                          FilteringTextInputFormatter.allow(
-                                            RegExp(r'(^\d*\.?\d*)'),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  )
-                                  : Expanded(
                                     child: IconTextField(
                                       controller: _controller.mrpController,
                                       hint: 'Enter mrp',
-                                      textInputType:
-                                          TextInputType.numberWithOptions(
-                                            signed: false,
-                                            decimal: true,
-                                          ),
+                                      textInputType: TextInputType.text,
                                       whiteBackground: false,
+                                      isEnabled: false,
                                       label: 'MRP',
-                                      formatters: [
-                                        FilteringTextInputFormatter.allow(
-                                          RegExp(r'(^\d*\.?\d*)'),
-                                        ),
-                                      ],
+                                    ),
+                                  )
+                                  : Expanded(
+                                    child: Obx(
+                                      () => AppDropDown(
+                                        label: 'MRP',
+                                        hint: 'Enter mrp',
+                                        items: _controller.productMrps,
+                                        selectedValue:
+                                            _controller.selectedMrp.value,
+                                        onValueSelected:
+                                            _controller.onMrpSelected,
+                                      ),
                                     ),
                                   ),
                             ],

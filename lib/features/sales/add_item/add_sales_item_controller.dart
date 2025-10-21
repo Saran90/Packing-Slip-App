@@ -120,9 +120,11 @@ class AddSalesItemController extends GetxController {
     return selectedProductItem.value?.availableMrps ?? [];
   }
 
-  void onMrpSelected(double value) {
-    selectedMrp.value = value;
-    mrpController.text = '$value';
+  void onMrpSelected(double? value) {
+    if (value != null) {
+      selectedMrp.value = value;
+      mrpController.text = '$value';
+    }
   }
 
   void onProductItemSelected(ProductItem item) {
@@ -166,9 +168,9 @@ class AddSalesItemController extends GetxController {
   }
 
   void onSaved() {
-    if(selectedProductItem.value != null) {
+    if (selectedProductItem.value != null) {
       if (nameController.text.isNotEmpty) {
-        if (mrpController.text.isNotEmpty) {
+        if (selectedMrp.value != null) {
           if ((quantityController.text.isEmpty ||
               quantityController.text == '0')) {
             showToast(message: 'Quantity cannot be empty or 0');
@@ -184,7 +186,7 @@ class AddSalesItemController extends GetxController {
                 quantity: quantityController.text.toInt() ?? 0,
                 rowNumber: row ?? 0,
                 billId: salesItem.value?.billId,
-                mrp: mrpController.text.toDouble() ?? 0,
+                mrp: selectedMrp.value,
                 isLooselyPacked: salesItem.value?.isLooselyPacked ?? false,
                 isCompleted: salesItem.value?.isCompleted ?? false,
                 orderQty: salesItem.value?.orderQty ?? 0,
@@ -192,16 +194,17 @@ class AddSalesItemController extends GetxController {
                 billDetailId: salesItem.value?.billDetailId ?? 0,
                 isNew: true,
                 productId:
-                isEdit.value
-                    ? productId.value
-                    : selectedProductItem.value?.id,
+                    isEdit.value
+                        ? productId.value
+                        : selectedProductItem.value?.id,
                 packedController:
-                salesItem.value?.packedController ?? TextEditingController(),
+                    salesItem.value?.packedController ??
+                    TextEditingController(),
               ),
             );
           }
         } else {
-          showToast(message: 'MRP should not be empty');
+          showToast(message: 'Please select an MRP');
         }
       } else {
         showToast(message: 'Name should not be empty');
@@ -302,6 +305,11 @@ class AddSalesItemController extends GetxController {
             packagingController.text = selectedProductItem.value?.packing ?? '';
             mrpController.text =
                 selectedProductItem.value?.mrp.toString() ?? '';
+            productMrps.value = item?.availableMrps ?? [];
+            if (productMrps.length == 1) {
+              selectedMrp.value = productMrps.first;
+              mrpController.text = productMrps.first.toString();
+            }
             quantityFocusNode.requestFocus();
           } else {
             showProductSelectionWidget();
@@ -378,6 +386,11 @@ class AddSalesItemController extends GetxController {
   void onProductVariantSelected(ProductItem item) {
     Get.back();
     selectedProductItem.value = item;
+    productMrps.value = item.availableMrps;
+    if (productMrps.length == 1) {
+      selectedMrp.value = productMrps.first;
+      mrpController.text = productMrps.first.toString();
+    }
     populateProductDetails();
   }
 }

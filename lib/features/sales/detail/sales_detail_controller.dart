@@ -82,10 +82,17 @@ class SalesDetailController extends GetxController {
                     .toList() ??
                 [],
           );
-          casesController.text = sales.value?.cases?.toString() ?? '';
+          if (sales.value?.cases == 0) {
+            casesController.text = '';
+          } else {
+            casesController.text = sales.value?.cases?.toString() ?? '';
+          }
           items.value = sales.value?.items ?? [];
           for (int i = 0; i < items.length; i++) {
-            items[i].packedController?.text = items[i].packedQty.toString();
+            items[i].packedController?.text =
+                items[i].packedQty.toString() == '0'
+                    ? ''
+                    : items[i].packedQty.toString();
           }
         } else {
           showToast(message: networkFailureMessage);
@@ -96,20 +103,24 @@ class SalesDetailController extends GetxController {
   }
 
   void onBackClicked(BuildContext context) {
-    showUnsavedDataDialog(context, () {
-      Get.back();
-      Get.back();
-    },() {
-      Get.back();
-      onSaveClicked();
-    },);
+    showUnsavedDataDialog(
+      context,
+      () {
+        Get.back();
+        Get.back();
+      },
+      () {
+        Get.back();
+        onSaveClicked();
+      },
+    );
   }
 
   Future<void> onAddClicked() async {
-    if(!isLoading.value) {
+    if (!isLoading.value) {
       var item =
-      await Get.toNamed(addSalesItemRoute, arguments: [null, items.length])
-      as SalesItem?;
+          await Get.toNamed(addSalesItemRoute, arguments: [null, items.length])
+              as SalesItem?;
       onItemAdded(item);
       Get.focusScope?.unfocus();
     }
@@ -121,7 +132,7 @@ class SalesDetailController extends GetxController {
         .toList()
         .indexOf(item.productId);
     items[index].isCompleted = value ?? false;
-    if(!(value??false)) {
+    if (!(value ?? false)) {
       items[index].packedController?.text = '';
     }
     items.refresh();
@@ -216,7 +227,8 @@ class SalesDetailController extends GetxController {
       if (_isAlreadyAdded(item)) {
         if (_hasDifferentMrp(item)) {
           item.packedController = TextEditingController();
-          item.packedController?.text = item.packedQty.toString();
+          item.packedController?.text =
+              item.packedQty.toString() == '0' ? '' : item.packedQty.toString();
           items.add(item);
           update();
         } else {
@@ -226,7 +238,8 @@ class SalesDetailController extends GetxController {
         }
       } else {
         item.packedController = TextEditingController();
-        item.packedController?.text = item.packedQty.toString();
+        item.packedController?.text =
+            item.packedQty.toString() == '0' ? '' : item.packedQty.toString();
         items.add(item);
       }
     }
@@ -280,7 +293,11 @@ class SalesDetailController extends GetxController {
     );
   }
 
-  void showUnsavedDataDialog(BuildContext context, Function() onNoClicked, Function() onYesClicked) {
+  void showUnsavedDataDialog(
+    BuildContext context,
+    Function() onNoClicked,
+    Function() onYesClicked,
+  ) {
     showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -288,14 +305,8 @@ class SalesDetailController extends GetxController {
           title: Text("Save Bill"),
           content: Text("Save Changes?"),
           actions: [
-            TextButton(
-              onPressed: onNoClicked,
-              child: Text("No"),
-            ),
-            TextButton(
-              onPressed: onYesClicked,
-              child: Text("Yes"),
-            ),
+            TextButton(onPressed: onNoClicked, child: Text("No")),
+            TextButton(onPressed: onYesClicked, child: Text("Yes")),
           ],
         );
       },

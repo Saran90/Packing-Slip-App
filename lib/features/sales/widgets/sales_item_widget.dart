@@ -17,6 +17,7 @@ class SalesItemWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Slidable(
+      enabled: !(sales.isImported??false),
       endActionPane: ActionPane(
         motion: ScrollMotion(),
         children: [

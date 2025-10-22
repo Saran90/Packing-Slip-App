@@ -6,13 +6,23 @@ import '../../../utils/colors.dart';
 import '../models/user.dart';
 import 'allot_series_controller.dart';
 
-class AllotSeriesWidget extends StatelessWidget {
-  AllotSeriesWidget({super.key, this.user}){
-    controller.setUser(user);
-  }
+class AllotSeriesWidget extends StatefulWidget {
+  AllotSeriesWidget({super.key, this.user});
 
   final User? user;
+
+  @override
+  State<AllotSeriesWidget> createState() => _AllotSeriesWidgetState();
+}
+
+class _AllotSeriesWidgetState extends State<AllotSeriesWidget> {
   final controller = AllotSeriesController();
+
+  @override
+  void initState() {
+    controller.setUser(widget.user);
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {

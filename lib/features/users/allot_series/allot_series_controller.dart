@@ -17,7 +17,7 @@ class AllotSeriesController extends GetxController {
   final nameController = TextEditingController();
   final seriesController = TextEditingController();
   final billDateController = TextEditingController();
-  Rx<DateTime> selectedBillDate = Rx<DateTime>(DateTime.now());
+  Rxn<DateTime> selectedBillDate = Rxn<DateTime>();
   RxBool isLoading = RxBool(false);
   Rxn<User> user = Rxn<User>();
   final UsersApi usersApi = Get.find();
@@ -43,7 +43,7 @@ class AllotSeriesController extends GetxController {
         request: AllotSeriesRequest(
           userName: nameController.text,
           series: seriesController.text,
-          billDate: selectedBillDate.value.toIso8601String(),
+          billDate: selectedBillDate.value?.toIso8601String(),
           userId: user.value?.userId,
         ),
       );

@@ -6,13 +6,23 @@ import '../../../utils/colors.dart';
 import '../models/user.dart';
 import 'add_user_controller.dart';
 
-class AddUserWidget extends StatelessWidget {
-  AddUserWidget({super.key, this.user}){
-    controller.setUser(user);
-  }
+class AddUserWidget extends StatefulWidget {
+  AddUserWidget({super.key, this.user});
 
   final User? user;
+
+  @override
+  State<AddUserWidget> createState() => _AddUserWidgetState();
+}
+
+class _AddUserWidgetState extends State<AddUserWidget> {
   final controller = AddUserController();
+
+  @override
+  void initState() {
+    controller.setUser(widget.user);
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -38,7 +48,7 @@ class AddUserWidget extends StatelessWidget {
                 Align(
                   alignment: Alignment.center,
                   child: Text(
-                    user == null ? 'Add User' : 'Update User',
+                    widget.user == null ? 'Add User' : 'Update User',
                     style: const TextStyle(
                       fontSize: 21,
                       fontWeight: FontWeight.w700,

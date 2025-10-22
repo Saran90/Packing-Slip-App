@@ -376,6 +376,10 @@ class AddSalesItemController extends GetxController {
                 [],
           );
           productMrps.value = selectedProductItem.value?.availableMrps ?? [];
+          if (productMrps.length == 1) {
+            selectedMrp.value = productMrps.first;
+            mrpController.text = productMrps.first.toString();
+          }
           populateProductDetails();
         } else {}
         isLoading.value = false;

@@ -139,15 +139,19 @@ class SalesDetailController extends GetxController {
   }
 
   void onIsCompleteChanged(SalesItem item, bool? value) {
-    int index = items
-        .map((element) => element.productId)
-        .toList()
-        .indexOf(item.productId);
-    items[index].isCompleted = value ?? false;
-    if (!(value ?? false)) {
-      items[index].packedController?.text = '';
+    if(item.packedController?.text.isEmpty??false) {
+      showToast(message: 'Packed Qty is empty');
+    } else {
+      int index = items
+          .map((element) => element.productId)
+          .toList()
+          .indexOf(item.productId);
+      items[index].isCompleted = value ?? false;
+      if (!(value ?? false)) {
+        items[index].packedController?.text = '';
+      }
+      items.refresh();
     }
-    items.refresh();
   }
 
   void onLooselyPackedChanged(SalesItem item, bool? value) {

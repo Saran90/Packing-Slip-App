@@ -171,7 +171,7 @@ class SalesDetailController extends GetxController {
         status: _getStatus(),
         customerName: sales.value?.customerName,
         billDate: sales.value?.billDate?.toIso8601String(),
-        cases: casesController.text.toInt(),
+        cases: casesController.text.toInt()??0,
         itemsList:
             items
                 .map(

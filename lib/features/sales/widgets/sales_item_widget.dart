@@ -49,7 +49,9 @@ class SalesItemWidget extends StatelessWidget {
                   bottomLeft: Radius.circular(10),
                 ),
                 color:
-                    (sales.status == 2)
+                    sales.isImported ?? false
+                        ? Colors.blue
+                        : (sales.status == 2)
                         ? Colors.green
                         : (sales.status == 1)
                         ? Colors.orange

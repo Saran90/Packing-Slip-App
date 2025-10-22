@@ -10,11 +10,13 @@ class Sales {
   int? cases;
   int? status;
   int? userId;
+  bool? isImported;
   List<SalesItem>? items;
 
   Sales({
     this.status,
     this.billId,
+    this.isImported,
     this.series,
     this.cases,
     this.billNumber,

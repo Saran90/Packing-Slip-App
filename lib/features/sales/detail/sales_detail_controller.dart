@@ -62,6 +62,7 @@ class SalesDetailController extends GetxController {
             billDate: r.billDate?.toDate(),
             cases: r.cases?.toInt() ?? 0,
             userId: r.userId?.toInt(),
+            isImported: r.isImported,
             items:
                 r.itemsList
                     ?.map(
@@ -103,26 +104,37 @@ class SalesDetailController extends GetxController {
   }
 
   void onBackClicked(BuildContext context) {
-    showUnsavedDataDialog(
-      context,
-      () {
-        Get.back();
-        Get.back();
-      },
-      () {
-        Get.back();
-        onSaveClicked();
-      },
-    );
+    if (sales.value?.isImported ?? false) {
+      Get.back();
+    } else {
+      showUnsavedDataDialog(
+        context,
+        () {
+          Get.back();
+          Get.back();
+        },
+        () {
+          Get.back();
+          onSaveClicked();
+        },
+      );
+    }
   }
 
   Future<void> onAddClicked() async {
-    if (!isLoading.value) {
-      var item =
-          await Get.toNamed(addSalesItemRoute, arguments: [null, items.length])
-              as SalesItem?;
-      onItemAdded(item);
-      Get.focusScope?.unfocus();
+    if (sales.value?.isImported ?? false) {
+      return;
+    } else {
+      if (!isLoading.value) {
+        var item =
+            await Get.toNamed(
+                  addSalesItemRoute,
+                  arguments: [null, items.length],
+                )
+                as SalesItem?;
+        onItemAdded(item);
+        Get.focusScope?.unfocus();
+      }
     }
   }
 
@@ -211,14 +223,18 @@ class SalesDetailController extends GetxController {
   }
 
   Future<void> onSaveClicked() async {
-    if (sales.value?.items?.any((element) => element.isCompleted == false) ??
-        false) {
-      showIncompleteSalesDialog(() {
-        Get.back();
-        callSalesApi();
-      });
+    if (sales.value?.isImported ?? false) {
+      return;
     } else {
-      callSalesApi();
+      if (sales.value?.items?.any((element) => element.isCompleted == false) ??
+          false) {
+        showIncompleteSalesDialog(() {
+          Get.back();
+          callSalesApi();
+        });
+      } else {
+        callSalesApi();
+      }
     }
   }
 
@@ -477,24 +493,26 @@ class SalesDetailController extends GetxController {
   }
 
   Future<void> onBarcodeClicked(BuildContext context, SalesItem element) async {
-    String? res = await SimpleBarcodeScanner.scanBarcode(
-      Get.context!,
-      barcodeAppBar: const BarcodeAppBar(
-        appBarTitle: 'Barcode',
-        centerTitle: false,
-        enableBackButton: true,
-        backButtonIcon: Icon(Icons.arrow_back_ios),
-      ),
-      isShowFlashIcon: true,
-      delayMillis: 2000,
-      cameraFace: CameraFace.back,
-    );
-    if (res != null) {
-      if (res == '-1') {
-        res = '';
-      }
-      if (res.isNotEmpty) {
-        getAllProductsByBarcode(context, res, element);
+    if(!(sales.value?.isImported??false)) {
+      String? res = await SimpleBarcodeScanner.scanBarcode(
+        Get.context!,
+        barcodeAppBar: const BarcodeAppBar(
+          appBarTitle: 'Barcode',
+          centerTitle: false,
+          enableBackButton: true,
+          backButtonIcon: Icon(Icons.arrow_back_ios),
+        ),
+        isShowFlashIcon: true,
+        delayMillis: 2000,
+        cameraFace: CameraFace.back,
+      );
+      if (res != null) {
+        if (res == '-1') {
+          res = '';
+        }
+        if (res.isNotEmpty) {
+          getAllProductsByBarcode(context, res, element);
+        }
       }
     }
   }

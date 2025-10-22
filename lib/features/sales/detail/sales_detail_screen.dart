@@ -19,7 +19,7 @@ class SalesDetailScreen extends StatelessWidget {
     return PopScope(
       canPop: false,
       onPopInvokedWithResult: (didPop, result) {
-        if(!didPop) {
+        if (!didPop) {
           _controller.onBackClicked(context);
         }
       },
@@ -67,12 +67,15 @@ class SalesDetailScreen extends StatelessWidget {
                               ),
                             ],
                           ),
-                          InkWell(
+                          if(!(_controller.sales.value?.isImported??false))InkWell(
                             onTap: () => _controller.onSaveClicked(),
                             child: Container(
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(10),
-                                border: Border.all(color: Colors.white, width: 1),
+                                border: Border.all(
+                                  color: Colors.white,
+                                  width: 1,
+                                ),
                               ),
                               padding: EdgeInsets.symmetric(
                                 horizontal: 20,
@@ -96,7 +99,8 @@ class SalesDetailScreen extends StatelessWidget {
                           child: Column(
                             children: [
                               Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
                                 children: [
                                   Expanded(
                                     child: Column(
@@ -161,7 +165,8 @@ class SalesDetailScreen extends StatelessWidget {
                               ),
                               const SizedBox(height: 20),
                               Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Expanded(
@@ -229,7 +234,8 @@ class SalesDetailScreen extends StatelessWidget {
                               ),
                               const SizedBox(height: 20),
                               Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Expanded(
@@ -295,7 +301,8 @@ class SalesDetailScreen extends StatelessWidget {
                               ),
                               const SizedBox(height: 20),
                               Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Expanded(
@@ -305,6 +312,12 @@ class SalesDetailScreen extends StatelessWidget {
                                       bottomPadding: 10,
                                       width: 120,
                                       hint: '',
+                                      isEnabled:
+                                          !(_controller
+                                                  .sales
+                                                  .value
+                                                  ?.isImported ??
+                                              false),
                                       textInputType:
                                           TextInputType.numberWithOptions(
                                             signed: false,
@@ -325,7 +338,8 @@ class SalesDetailScreen extends StatelessWidget {
                               ),
                               const SizedBox(height: 40),
                               Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
                                 children: [
                                   Text(
                                     'Items',
@@ -349,35 +363,38 @@ class SalesDetailScreen extends StatelessWidget {
                               ),
                               const SizedBox(height: 20),
                               Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
                                 children: [
                                   Expanded(
-                                    child: Obx(() => Text.rich(
-                                      TextSpan(
-                                        children: [
-                                          TextSpan(
-                                            text: 'Completed: ',
-                                            style: TextStyle(
-                                              fontSize: 14,
-                                              fontWeight: FontWeight.w400,
-                                              color: Colors.white,
+                                    child: Obx(
+                                      () => Text.rich(
+                                        TextSpan(
+                                          children: [
+                                            TextSpan(
+                                              text: 'Completed: ',
+                                              style: TextStyle(
+                                                fontSize: 14,
+                                                fontWeight: FontWeight.w400,
+                                                color: Colors.white,
+                                              ),
                                             ),
-                                          ),
-                                          TextSpan(
-                                            text:
-                                            '${_controller.items.where((p0) => p0.isCompleted).length}/${_controller.items.length}',
-                                            style: TextStyle(
-                                              fontSize: 18,
-                                              fontWeight: FontWeight.w700,
-                                              color: Colors.white,
+                                            TextSpan(
+                                              text:
+                                                  '${_controller.items.where((p0) => p0.isCompleted).length}/${_controller.items.length}',
+                                              style: TextStyle(
+                                                fontSize: 18,
+                                                fontWeight: FontWeight.w700,
+                                                color: Colors.white,
+                                              ),
                                             ),
-                                          ),
-                                        ],
+                                          ],
+                                        ),
                                       ),
-                                    ),),
+                                    ),
                                   ),
                                   const SizedBox(width: 20),
-                                  Expanded(
+                                  if(!(_controller.sales.value?.isImported??false))Expanded(
                                     child: AppButton(
                                       label: 'Add item',
                                       onSubmit: _controller.onAddClicked,
@@ -396,7 +413,9 @@ class SalesDetailScreen extends StatelessWidget {
                                           ? Center(
                                             child: Text(
                                               'No items',
-                                              style: TextStyle(color: textColor),
+                                              style: TextStyle(
+                                                color: textColor,
+                                              ),
                                             ),
                                           )
                                           : Column(
@@ -500,7 +519,8 @@ class SalesDetailScreen extends StatelessWidget {
                                                                         ),
                                                                       ),
                                                                       const SizedBox(
-                                                                        width: 5,
+                                                                        width:
+                                                                            5,
                                                                       ),
                                                                       Text(
                                                                         '${element.orderQty}',
@@ -534,7 +554,8 @@ class SalesDetailScreen extends StatelessWidget {
                                                                         ),
                                                                       ),
                                                                       const SizedBox(
-                                                                        width: 5,
+                                                                        width:
+                                                                            5,
                                                                       ),
                                                                       Expanded(
                                                                         child: IconTextField(
@@ -542,7 +563,14 @@ class SalesDetailScreen extends StatelessWidget {
                                                                               '',
                                                                           height:
                                                                               30,
-                                                                          onChanged: (p0) => _controller.onPackedQtyUpdated(element,p0),
+                                                                          onChanged:
+                                                                              (p0) => _controller.onPackedQtyUpdated(
+                                                                                element,
+                                                                                p0,
+                                                                              ),
+                                                                          isEnabled:
+                                                                              !(_controller.sales.value?.isImported ??
+                                                                                  false),
                                                                           bottomPadding:
                                                                               12,
                                                                           controller:
@@ -552,13 +580,16 @@ class SalesDetailScreen extends StatelessWidget {
                                                                               false,
                                                                           formatters: [
                                                                             FilteringTextInputFormatter.allow(
-                                                                              RegExp(r'(^\d*)'),
+                                                                              RegExp(
+                                                                                r'(^\d*)',
+                                                                              ),
                                                                             ),
                                                                           ],
-                                                                          textInputType:
-                                                                          TextInputType.numberWithOptions(
-                                                                            signed: false,
-                                                                            decimal: false,
+                                                                          textInputType: TextInputType.numberWithOptions(
+                                                                            signed:
+                                                                                false,
+                                                                            decimal:
+                                                                                false,
                                                                           ),
                                                                         ),
                                                                       ),
@@ -590,13 +621,12 @@ class SalesDetailScreen extends StatelessWidget {
                                                                       )) {
                                                                         return const BorderSide(
                                                                           color:
-                                                                              appColorGradient1,
+                                                                          Colors.white,
                                                                         );
                                                                       }
                                                                       return const BorderSide(
                                                                         color:
-                                                                            Colors
-                                                                                .white,
+                                                                        Colors.white,
                                                                       );
                                                                     }),
                                                                     title: Transform.translate(
@@ -621,16 +651,18 @@ class SalesDetailScreen extends StatelessWidget {
                                                                         EdgeInsets
                                                                             .zero,
                                                                     controlAffinity:
-                                                                        ListTileControlAffinity
-                                                                            .leading,
+                                                                    ListTileControlAffinity
+                                                                        .leading,
                                                                     checkColor:
-                                                                        appColorGradient1,
+                                                                    Colors.white,
                                                                     activeColor:
-                                                                        Colors
-                                                                            .white,
+                                                                    appColorGradient1,
                                                                     value:
                                                                         element
                                                                             .isLooselyPacked,
+                                                                    enabled:
+                                                                        !(_controller.sales.value?.isImported ??
+                                                                            false),
                                                                     onChanged:
                                                                         (
                                                                           value,
@@ -658,13 +690,12 @@ class SalesDetailScreen extends StatelessWidget {
                                                                       )) {
                                                                         return const BorderSide(
                                                                           color:
-                                                                              appColorGradient1,
+                                                                              Colors.white,
                                                                         );
                                                                       }
                                                                       return const BorderSide(
                                                                         color:
-                                                                            Colors
-                                                                                .white,
+                                                                            Colors.white,
                                                                       );
                                                                     }),
                                                                     contentPadding:
@@ -692,13 +723,15 @@ class SalesDetailScreen extends StatelessWidget {
                                                                         ListTileControlAffinity
                                                                             .leading,
                                                                     checkColor:
-                                                                        appColorGradient1,
+                                                                    Colors.white,
                                                                     activeColor:
-                                                                        Colors
-                                                                            .white,
+                                                                    appColorGradient1,
                                                                     value:
                                                                         element
                                                                             .isCompleted,
+                                                                    enabled:
+                                                                        !(_controller.sales.value?.isImported ??
+                                                                            false),
                                                                     onChanged:
                                                                         (
                                                                           value,
@@ -715,14 +748,15 @@ class SalesDetailScreen extends StatelessWidget {
                                                                   flex: 1,
                                                                   child: InkWell(
                                                                     onTap:
-                                                                        () => _controller
-                                                                            .onBarcodeClicked(context,
-                                                                              element,
-                                                                            ),
+                                                                        () => _controller.onBarcodeClicked(
+                                                                          context,
+                                                                          element,
+                                                                        ),
                                                                     child: Image.asset(
                                                                       'assets/icons/ic_barcode.png',
                                                                       width: 30,
-                                                                      height: 30,
+                                                                      height:
+                                                                          30,
                                                                       color:
                                                                           Colors
                                                                               .white,
@@ -754,9 +788,11 @@ class SalesDetailScreen extends StatelessWidget {
                                                             style: TextStyle(
                                                               fontSize: 12,
                                                               fontWeight:
-                                                                  FontWeight.w500,
+                                                                  FontWeight
+                                                                      .w500,
                                                               color:
-                                                                  Colors.black87,
+                                                                  Colors
+                                                                      .black87,
                                                             ),
                                                           ),
                                                         ),
@@ -764,7 +800,8 @@ class SalesDetailScreen extends StatelessWidget {
                                                     ),
                                                     Visibility(
                                                       visible:
-                                                          element.billDetailId ==
+                                                          element
+                                                              .billDetailId ==
                                                           0,
                                                       child: Align(
                                                         alignment:
@@ -776,13 +813,16 @@ class SalesDetailScreen extends StatelessWidget {
                                                                     element,
                                                                   ),
                                                           child: Container(
-                                                            decoration: BoxDecoration(
-                                                              borderRadius:
-                                                                  BorderRadius.circular(
-                                                                    5,
-                                                                  ),
-                                                              color: Colors.red,
-                                                            ),
+                                                            decoration:
+                                                                BoxDecoration(
+                                                                  borderRadius:
+                                                                      BorderRadius.circular(
+                                                                        5,
+                                                                      ),
+                                                                  color:
+                                                                      Colors
+                                                                          .red,
+                                                                ),
                                                             width: 75,
                                                             height: 25,
                                                             child: Row(
@@ -806,7 +846,8 @@ class SalesDetailScreen extends StatelessWidget {
                                                                     color:
                                                                         Colors
                                                                             .white,
-                                                                    fontSize: 12,
+                                                                    fontSize:
+                                                                        12,
                                                                     fontWeight:
                                                                         FontWeight
                                                                             .w500,

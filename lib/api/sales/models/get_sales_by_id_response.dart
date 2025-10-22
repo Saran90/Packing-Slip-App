@@ -55,10 +55,11 @@ class GetSalesByIdResponse {
   num? cases;
   num? status;
   num? userId;
+  bool? isImported;
   List<Items>? itemsList;
 
   GetSalesByIdResponse(
-      {this.billId, this.series, this.billNumber, this.billDate, this.customerName, this.billAmount, this.cases, this.status, this.userId, this.itemsList});
+      {this.billId, this.isImported, this.series, this.billNumber, this.billDate, this.customerName, this.billAmount, this.cases, this.status, this.userId, this.itemsList});
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
@@ -71,6 +72,7 @@ class GetSalesByIdResponse {
     map["cases"] = cases;
     map["status"] = status;
     map["userId"] = userId;
+    map["isImported"] = isImported;
     if (itemsList != null) {
       map["items"] = itemsList?.map((v) => v.toJson()).toList();
     }
@@ -87,6 +89,7 @@ class GetSalesByIdResponse {
     cases = json["cases"];
     status = json["status"];
     userId = json["userId"];
+    isImported = json["isImported"];
     if (json["items"] != null) {
       itemsList = [];
       json["items"].forEach((v) {

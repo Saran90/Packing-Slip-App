@@ -8,9 +8,10 @@ class Data {
   num? cases;
   num? status;
   num? userId;
+  bool? isImported;
 
   Data(
-      {this.billId, this.series, this.billNumber, this.billDate, this.customerName, this.billAmount, this.cases, this.status, this.userId});
+      {this.billId, this.isImported, this.series, this.billNumber, this.billDate, this.customerName, this.billAmount, this.cases, this.status, this.userId});
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
@@ -23,6 +24,7 @@ class Data {
     map["cases"] = cases;
     map["status"] = status;
     map["userId"] = userId;
+    map["isImported"] = isImported;
     return map;
   }
 
@@ -36,6 +38,7 @@ class Data {
     cases = json["cases"];
     status = json["status"];
     userId = json["userId"];
+    isImported = json["isImported"];
   }
 }
 

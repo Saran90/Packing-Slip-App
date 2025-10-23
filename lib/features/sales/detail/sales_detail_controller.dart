@@ -144,7 +144,9 @@ class SalesDetailController extends GetxController {
           .map((element) => element.productId)
           .toList()
           .indexOf(item.productId);
-      items[index].showError = true;
+      items[index].packedQty = items[index].orderQty;
+      items[index].packedController?.text = items[index].packedQty.toString();
+      items[index].isCompleted = value ?? false;
       items.refresh();
     } else {
       int index = items

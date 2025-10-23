@@ -17,7 +17,7 @@ class SalesItemWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Slidable(
-      enabled: !(sales.isImported??false),
+      enabled: !(sales.isImported ?? false),
       endActionPane: ActionPane(
         motion: ScrollMotion(),
         children: [
@@ -101,6 +101,31 @@ class SalesItemWidget extends StatelessWidget {
                                   ),
                                   maxLines: 1,
                                 ),
+                                Row(
+                                  children: [
+                                    Text(
+                                      'Cases',
+                                      style: TextStyle(
+                                        fontSize: 12,
+                                        fontWeight: FontWeight.w400,
+                                        color: Colors.white60,
+                                        overflow: TextOverflow.ellipsis,
+                                      ),
+                                      maxLines: 1,
+                                    ),
+                                    const SizedBox(width: 5),
+                                    Text(
+                                      sales.cases.toString(),
+                                      style: TextStyle(
+                                        fontSize: 13,
+                                        fontWeight: FontWeight.w500,
+                                        color: Colors.white,
+                                        overflow: TextOverflow.ellipsis,
+                                      ),
+                                      maxLines: 1,
+                                    ),
+                                  ],
+                                ),
                               ],
                             ),
                           ),
@@ -125,6 +150,16 @@ class SalesItemWidget extends StatelessWidget {
                             fontSize: 13,
                             fontWeight: FontWeight.w400,
                             color: Colors.white60,
+                          ),
+                        ),
+                        Expanded(
+                          child: Text(
+                            '',
+                            style: TextStyle(
+                              fontSize: 13,
+                              fontWeight: FontWeight.w400,
+                              color: Colors.white60,
+                            ),
                           ),
                         ),
                       ],

@@ -67,6 +67,7 @@ class SalesController extends GetxController {
                       billNumber: e.billNumber?.toInt(),
                       customerName: e.customerName,
                       series: e.series,
+                      cases: e.cases?.toInt(),
                       isImported: e.isImported
                     ),
                   )

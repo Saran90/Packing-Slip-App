@@ -140,12 +140,18 @@ class SalesDetailController extends GetxController {
 
   void onIsCompleteChanged(SalesItem item, bool? value) {
     if(item.packedController?.text.isEmpty??false) {
-      showToast(message: 'Packed Qty is empty');
+      int index = items
+          .map((element) => element.productId)
+          .toList()
+          .indexOf(item.productId);
+      items[index].showError = true;
+      items.refresh();
     } else {
       int index = items
           .map((element) => element.productId)
           .toList()
           .indexOf(item.productId);
+      items[index].showError = false;
       items[index].isCompleted = value ?? false;
       if (!(value ?? false)) {
         items[index].packedController?.text = '';
@@ -601,6 +607,7 @@ class SalesDetailController extends GetxController {
             .toList()
             .indexOf(element.productId);
         items[index].isCompleted = true;
+        items[index].showError = false;
       }
     } else {
       if (element.isCompleted) {

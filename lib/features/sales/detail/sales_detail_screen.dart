@@ -67,30 +67,31 @@ class SalesDetailScreen extends StatelessWidget {
                               ),
                             ],
                           ),
-                          if(!(_controller.sales.value?.isImported??false))InkWell(
-                            onTap: () => _controller.onSaveClicked(),
-                            child: Container(
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(10),
-                                border: Border.all(
-                                  color: Colors.white,
-                                  width: 1,
+                          if (!(_controller.sales.value?.isImported ?? false))
+                            InkWell(
+                              onTap: () => _controller.onSaveClicked(),
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(10),
+                                  border: Border.all(
+                                    color: Colors.white,
+                                    width: 1,
+                                  ),
                                 ),
-                              ),
-                              padding: EdgeInsets.symmetric(
-                                horizontal: 20,
-                                vertical: 5,
-                              ),
-                              child: Text(
-                                'Save',
-                                style: TextStyle(
-                                  fontSize: 15,
-                                  fontWeight: FontWeight.w500,
-                                  color: Colors.white,
+                                padding: EdgeInsets.symmetric(
+                                  horizontal: 20,
+                                  vertical: 5,
+                                ),
+                                child: Text(
+                                  'Save',
+                                  style: TextStyle(
+                                    fontSize: 15,
+                                    fontWeight: FontWeight.w500,
+                                    color: Colors.white,
+                                  ),
                                 ),
                               ),
                             ),
-                          ),
                         ],
                       ),
                       const SizedBox(height: 30),
@@ -394,14 +395,16 @@ class SalesDetailScreen extends StatelessWidget {
                                     ),
                                   ),
                                   const SizedBox(width: 20),
-                                  if(!(_controller.sales.value?.isImported??false))Expanded(
-                                    child: AppButton(
-                                      label: 'Add item',
-                                      onSubmit: _controller.onAddClicked,
-                                      startColor: appColorGradient1,
-                                      endColor: appColorGradient2,
+                                  if (!(_controller.sales.value?.isImported ??
+                                      false))
+                                    Expanded(
+                                      child: AppButton(
+                                        label: 'Add item',
+                                        onSubmit: _controller.onAddClicked,
+                                        startColor: appColorGradient1,
+                                        endColor: appColorGradient2,
+                                      ),
                                     ),
-                                  ),
                                 ],
                               ),
                               const SizedBox(height: 20),
@@ -598,6 +601,51 @@ class SalesDetailScreen extends StatelessWidget {
                                                                 ),
                                                               ],
                                                             ),
+                                                            if (element
+                                                                    .showError ??
+                                                                false)
+                                                              Align(
+                                                                alignment:
+                                                                    Alignment
+                                                                        .centerRight,
+                                                                child: Padding(
+                                                                  padding:
+                                                                      const EdgeInsets.only(
+                                                                        top: 5,
+                                                                      ),
+                                                                  child: Row(
+                                                                    mainAxisAlignment:
+                                                                        MainAxisAlignment
+                                                                            .end,
+                                                                    children: [
+                                                                      Text(
+                                                                        '*',
+                                                                        style: TextStyle(
+                                                                          fontSize:
+                                                                              11,
+                                                                          fontWeight:
+                                                                              FontWeight.w800,
+                                                                          color:
+                                                                              Colors.red,
+                                                                        ),
+                                                                      ),
+                                                                      Text(
+                                                                        'Packed qty is empty',
+                                                                        style: TextStyle(
+                                                                          fontSize:
+                                                                              11,
+                                                                          letterSpacing:
+                                                                              1.5,
+                                                                          fontWeight:
+                                                                              FontWeight.w800,
+                                                                          color:
+                                                                              Colors.redAccent,
+                                                                        ),
+                                                                      ),
+                                                                    ],
+                                                                  ),
+                                                                ),
+                                                              ),
                                                             const SizedBox(
                                                               height: 10,
                                                             ),
@@ -621,12 +669,12 @@ class SalesDetailScreen extends StatelessWidget {
                                                                       )) {
                                                                         return const BorderSide(
                                                                           color:
-                                                                          Colors.white,
+                                                                              Colors.white,
                                                                         );
                                                                       }
                                                                       return const BorderSide(
                                                                         color:
-                                                                        Colors.white,
+                                                                            Colors.white,
                                                                       );
                                                                     }),
                                                                     title: Transform.translate(
@@ -651,12 +699,13 @@ class SalesDetailScreen extends StatelessWidget {
                                                                         EdgeInsets
                                                                             .zero,
                                                                     controlAffinity:
-                                                                    ListTileControlAffinity
-                                                                        .leading,
+                                                                        ListTileControlAffinity
+                                                                            .leading,
                                                                     checkColor:
-                                                                    Colors.white,
+                                                                        Colors
+                                                                            .white,
                                                                     activeColor:
-                                                                    appColorGradient1,
+                                                                        appColorGradient1,
                                                                     value:
                                                                         element
                                                                             .isLooselyPacked,
@@ -723,9 +772,10 @@ class SalesDetailScreen extends StatelessWidget {
                                                                         ListTileControlAffinity
                                                                             .leading,
                                                                     checkColor:
-                                                                    Colors.white,
+                                                                        Colors
+                                                                            .white,
                                                                     activeColor:
-                                                                    appColorGradient1,
+                                                                        appColorGradient1,
                                                                     value:
                                                                         element
                                                                             .isCompleted,

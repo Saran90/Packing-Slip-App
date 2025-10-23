@@ -46,6 +46,7 @@ class SalesItem {
   double? price;
   int? quantity;
   bool? isNew;
+  bool? showError;
 
   SalesItem({
     this.billId,
@@ -64,6 +65,7 @@ class SalesItem {
     this.barcode,
     this.price,
     this.quantity,
-    this.isNew = false
+    this.isNew = false,
+    this.showError = false
   });
 }

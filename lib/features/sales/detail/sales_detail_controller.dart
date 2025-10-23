@@ -237,7 +237,13 @@ class SalesDetailController extends GetxController {
           callSalesApi();
         });
       } else {
-        callSalesApi();
+        if(casesController.text.isEmpty) {
+          showCasesIncompleteDialog(() {
+            Get.back();
+          },);
+        } else {
+          callSalesApi();
+        }
       }
     }
   }
@@ -340,6 +346,26 @@ class SalesDetailController extends GetxController {
         return AlertDialog(
           title: Text("Sales Bill"),
           content: Text("Incomplete items found"),
+          actions: [
+            TextButton(
+              child: Text("Ok"),
+              onPressed: () {
+                onOkClicked();
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  void showCasesIncompleteDialog(Function() onOkClicked) {
+    showDialog(
+      context: Get.context!,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text("Sales Bill"),
+          content: Text("Cases not complete"),
           actions: [
             TextButton(
               child: Text("Ok"),

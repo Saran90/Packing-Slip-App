@@ -240,17 +240,27 @@ class SalesDetailController extends GetxController {
     } else {
       if (sales.value?.items?.any((element) => element.isCompleted == false) ??
           false) {
+        if(sales.value?.items?.every((element) => element.isLooselyPacked == true) ??
+            false) {
+          casesController.text = '0';
+        }
         showIncompleteSalesDialog(() {
           Get.back();
           callSalesApi();
         });
       } else {
-        if (casesController.text.isEmpty) {
-          showCasesIncompleteDialog(() {
-            Get.back();
-          });
-        } else {
+        if(sales.value?.items?.every((element) => element.isLooselyPacked == true) ??
+            false) {
+          casesController.text = '0';
           callSalesApi();
+        } else {
+          if (casesController.text.isEmpty) {
+            showCasesIncompleteDialog(() {
+              Get.back();
+            });
+          } else {
+            callSalesApi();
+          }
         }
       }
     }

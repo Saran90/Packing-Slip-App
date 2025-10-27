@@ -612,7 +612,7 @@ class SalesDetailController extends GetxController {
   }
 
   void onPackedQtyUpdated(SalesItem element, String p0) {
-    if ((p0.toInt() ?? 0) > 0) {
+    if (p0.toInt() != null) {
       if (!element.isCompleted) {
         int index = items
             .map((e) => e.productId)

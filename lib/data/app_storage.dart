@@ -20,8 +20,17 @@ class AppStorage {
     return accessToken;
   }
 
+  String? getUsername() {
+    String? username = box.read(usernameKey);
+    return username;
+  }
+
   Future<void> setFirmName({required String firmName}) async {
     await box.write(firmNameKey, firmName);
+  }
+
+  Future<void> setUsername({required String username}) async {
+    await box.write(usernameKey, username);
   }
 
   Future<void> setId({required int id}) async {

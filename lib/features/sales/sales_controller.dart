@@ -20,6 +20,7 @@ class SalesController extends GetxController {
   Rx<DateTime?> endDate = Rx<DateTime?>(null);
   RxInt supplierId = 150.obs;
   RxString firmName = ''.obs;
+  RxString username = ''.obs;
   RxList<Sales> sales = RxList([]);
   RxBool isAdmin = RxBool(false);
   RxBool noData = RxBool(false);
@@ -28,6 +29,7 @@ class SalesController extends GetxController {
   @override
   void onInit() {
     firmName.value = appStorage.getFirmName() ?? '';
+    username.value = appStorage.getUsername() ?? '';
     isAdmin.value = appStorage.isAdmin() ?? false;
     loadSales();
     super.onInit();

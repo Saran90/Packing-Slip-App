@@ -37,22 +37,55 @@ class SalesScreen extends StatelessWidget {
                       const SizedBox(height: 30),
                       Stack(
                         children: [
-                          Align(
-                            alignment: Alignment.center,
-                            child: Center(
-                              child: Obx(
-                                () => Text(
-                                  _controller.firmName.value,
-                                  style: TextStyle(
-                                    fontSize: 18,
-                                    fontWeight: FontWeight.w600,
-                                    color: textColor,
-                                    overflow: TextOverflow.ellipsis,
+                          Column(
+                            children: [
+                              Align(
+                                alignment: Alignment.center,
+                                child: Center(
+                                  child: Obx(
+                                    () => Text(
+                                      _controller.firmName.value,
+                                      style: TextStyle(
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.w600,
+                                        color: textColor,
+                                        overflow: TextOverflow.ellipsis,
+                                      ),
+                                      maxLines: 2,
+                                    ),
                                   ),
-                                  maxLines: 2,
                                 ),
                               ),
-                            ),
+                              const SizedBox(height: 10,),
+                              Align(
+                                alignment: Alignment.centerLeft,
+                                child: Row(
+                                  children: [
+                                    Text(
+                                      'User:',
+                                      style: TextStyle(
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.w400,
+                                        color: textColor,
+                                      ),
+                                    ),
+                                    const SizedBox(width: 5,),
+                                    Obx(
+                                          () => Text(
+                                        '${_controller.username}',
+                                        style: TextStyle(
+                                          fontSize: 18,
+                                          fontWeight: FontWeight.w600,
+                                          color: textColor,
+                                          overflow: TextOverflow.ellipsis,
+                                        ),
+                                        maxLines: 2,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ],
                           ),
                           Align(
                             alignment: Alignment.centerRight,

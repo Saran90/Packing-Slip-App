@@ -55,6 +55,7 @@ class LoginController extends GetxController {
             await appStorage.setFirmName(firmName: r.firmName ?? '');
             await appStorage.setIsAdmin(isAdmin: r.isAdmin ?? false);
             await appStorage.setId(id: r.userId ?? 0);
+            await appStorage.setUsername(username: userNameController.text);
             Get.offAndToNamed(salesRoute);
           } else {
             showToast(message: loginFailedMessage);

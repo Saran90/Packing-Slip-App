@@ -508,32 +508,29 @@ class SalesDetailScreen extends StatelessWidget {
                                                                       .spaceBetween,
                                                               children: [
                                                                 Expanded(
-                                                                  child: Row(
+                                                                  child: Column(
+                                                                    crossAxisAlignment: CrossAxisAlignment.start,
                                                                     children: [
                                                                       Text(
-                                                                        'Order Qty: ',
+                                                                        'MRP',
                                                                         style: TextStyle(
                                                                           fontSize:
-                                                                              12,
+                                                                          12,
                                                                           fontWeight:
-                                                                              FontWeight.w400,
+                                                                          FontWeight.w400,
                                                                           color:
-                                                                              Colors.white,
+                                                                          Colors.white,
                                                                         ),
                                                                       ),
-                                                                      const SizedBox(
-                                                                        width:
-                                                                            5,
-                                                                      ),
                                                                       Text(
-                                                                        '${element.orderQty}',
+                                                                        '$rupeeIcon ${element.mrp}',
                                                                         style: TextStyle(
                                                                           fontSize:
-                                                                              14,
+                                                                          14,
                                                                           fontWeight:
-                                                                              FontWeight.w700,
+                                                                          FontWeight.w700,
                                                                           color:
-                                                                              Colors.white,
+                                                                          Colors.white,
                                                                         ),
                                                                       ),
                                                                     ],
@@ -543,10 +540,43 @@ class SalesDetailScreen extends StatelessWidget {
                                                                   width: 10,
                                                                 ),
                                                                 Expanded(
-                                                                  child: Row(
+                                                                  child: Column(
+                                                                    crossAxisAlignment: CrossAxisAlignment.start,
                                                                     children: [
                                                                       Text(
-                                                                        'Packed Qty: ',
+                                                                        'Order Qty',
+                                                                        style: TextStyle(
+                                                                          fontSize:
+                                                                          12,
+                                                                          fontWeight:
+                                                                          FontWeight.w400,
+                                                                          color:
+                                                                          Colors.white,
+                                                                        ),
+                                                                      ),
+                                                                      Text(
+                                                                        '${element.orderQty}',
+                                                                        style: TextStyle(
+                                                                          fontSize:
+                                                                          14,
+                                                                          fontWeight:
+                                                                          FontWeight.w700,
+                                                                          color:
+                                                                          Colors.white,
+                                                                        ),
+                                                                      ),
+                                                                    ],
+                                                                  ),
+                                                                ),
+                                                                const SizedBox(
+                                                                  width: 10,
+                                                                ),
+                                                                Expanded(
+                                                                  child: Column(
+                                                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                                                    children: [
+                                                                      Text(
+                                                                        'Packed Qty',
                                                                         style: TextStyle(
                                                                           fontSize:
                                                                               12,
@@ -556,44 +586,38 @@ class SalesDetailScreen extends StatelessWidget {
                                                                               Colors.white,
                                                                         ),
                                                                       ),
-                                                                      const SizedBox(
-                                                                        width:
-                                                                            5,
-                                                                      ),
-                                                                      Expanded(
-                                                                        child: IconTextField(
-                                                                          hint:
-                                                                              '',
-                                                                          height:
-                                                                              30,
-                                                                          onChanged:
-                                                                              (p0) => _controller.onPackedQtyUpdated(
-                                                                                element,
-                                                                                p0,
-                                                                              ),
-                                                                          isEnabled:
-                                                                              !(_controller.sales.value?.isImported ??
-                                                                                  false),
-                                                                          bottomPadding:
-                                                                              12,
-                                                                          controller:
-                                                                              element.packedController ??
-                                                                              TextEditingController(),
-                                                                          whiteBackground:
-                                                                              false,
-                                                                          formatters: [
-                                                                            FilteringTextInputFormatter.allow(
-                                                                              RegExp(
-                                                                                r'(^\d*)',
-                                                                              ),
+                                                                      IconTextField(
+                                                                        hint:
+                                                                            '',
+                                                                        height:
+                                                                            30,
+                                                                        onChanged:
+                                                                            (p0) => _controller.onPackedQtyUpdated(
+                                                                              element,
+                                                                              p0,
                                                                             ),
-                                                                          ],
-                                                                          textInputType: TextInputType.numberWithOptions(
-                                                                            signed:
-                                                                                false,
-                                                                            decimal:
-                                                                                false,
+                                                                        isEnabled:
+                                                                            !(_controller.sales.value?.isImported ??
+                                                                                false),
+                                                                        bottomPadding:
+                                                                            12,
+                                                                        controller:
+                                                                            element.packedController ??
+                                                                            TextEditingController(),
+                                                                        whiteBackground:
+                                                                            false,
+                                                                        formatters: [
+                                                                          FilteringTextInputFormatter.allow(
+                                                                            RegExp(
+                                                                              r'(^\d*)',
+                                                                            ),
                                                                           ),
+                                                                        ],
+                                                                        textInputType: TextInputType.numberWithOptions(
+                                                                          signed:
+                                                                              false,
+                                                                          decimal:
+                                                                              false,
                                                                         ),
                                                                       ),
                                                                     ],

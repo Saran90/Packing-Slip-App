@@ -83,7 +83,7 @@ class SalesDetailController extends GetxController {
                     .toList() ??
                 [],
           );
-          if (sales.value?.cases == 0) {
+          if (sales.value?.cases == 0 && sales.value?.status == 0) {
             casesController.text = '';
           } else {
             casesController.text = sales.value?.cases?.toString() ?? '';
@@ -139,7 +139,7 @@ class SalesDetailController extends GetxController {
   }
 
   void onIsCompleteChanged(SalesItem item, bool? value) {
-    if(item.packedController?.text.isEmpty??false) {
+    if (item.packedController?.text.isEmpty ?? false) {
       int index = items
           .map((element) => element.productId)
           .toList()
@@ -183,7 +183,7 @@ class SalesDetailController extends GetxController {
         status: _getStatus(),
         customerName: sales.value?.customerName,
         billDate: sales.value?.billDate?.toIso8601String(),
-        cases: casesController.text.toInt()??0,
+        cases: casesController.text.toInt() ?? 0,
         itemsList:
             items
                 .map(
@@ -245,10 +245,10 @@ class SalesDetailController extends GetxController {
           callSalesApi();
         });
       } else {
-        if(casesController.text.isEmpty) {
+        if (casesController.text.isEmpty) {
           showCasesIncompleteDialog(() {
             Get.back();
-          },);
+          });
         } else {
           callSalesApi();
         }
@@ -531,7 +531,7 @@ class SalesDetailController extends GetxController {
   }
 
   Future<void> onBarcodeClicked(BuildContext context, SalesItem element) async {
-    if(!(sales.value?.isImported??false)) {
+    if (!(sales.value?.isImported ?? false)) {
       String? res = await SimpleBarcodeScanner.scanBarcode(
         Get.context!,
         barcodeAppBar: const BarcodeAppBar(

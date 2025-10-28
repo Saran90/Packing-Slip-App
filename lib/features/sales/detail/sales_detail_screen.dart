@@ -465,7 +465,7 @@ class SalesDetailScreen extends StatelessWidget {
                                                                         '',
                                                                     style: TextStyle(
                                                                       fontSize:
-                                                                          15,
+                                                                          13,
                                                                       fontWeight:
                                                                           FontWeight
                                                                               .w600,
@@ -473,7 +473,7 @@ class SalesDetailScreen extends StatelessWidget {
                                                                           Colors
                                                                               .white,
                                                                     ),
-                                                                    maxLines: 2,
+                                                                    maxLines: 3,
                                                                   ),
                                                                 ),
                                                                 const SizedBox(

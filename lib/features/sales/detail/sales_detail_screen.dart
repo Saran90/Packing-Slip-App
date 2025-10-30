@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
@@ -185,14 +186,14 @@ class SalesDetailScreen extends StatelessWidget {
                                         ),
                                         const SizedBox(height: 5),
                                         Obx(
-                                          () => Text(
+                                          () => AutoSizeText(
                                             _controller
                                                     .sales
                                                     .value
                                                     ?.customerName ??
                                                 '---',
                                             style: TextStyle(
-                                              fontSize: 16,
+                                              fontSize: 15,
                                               fontWeight: FontWeight.w700,
                                               color: Colors.white,
                                             ),

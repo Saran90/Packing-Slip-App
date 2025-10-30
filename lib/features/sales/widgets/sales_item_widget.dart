@@ -102,7 +102,7 @@ class SalesItemWidget extends StatelessWidget {
                                       color: Colors.white60,
                                       overflow: TextOverflow.ellipsis,
                                     ),
-                                    maxLines: 2,
+                                    maxLines: 3,
                                   ),
                                 ),
                                 Row(

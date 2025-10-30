@@ -197,7 +197,7 @@ class SalesDetailScreen extends StatelessWidget {
                                               fontWeight: FontWeight.w700,
                                               color: Colors.white,
                                             ),
-                                            maxLines: 2,
+                                            maxLines: 4,
                                           ),
                                         ),
                                       ],

@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:packing_slip_app/utils/extensions.dart';
@@ -31,7 +32,7 @@ class SalesItemWidget extends StatelessWidget {
         ],
       ),
       child: Container(
-        height: 80,
+        height: 100,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10),
           color: Colors.white10,
@@ -43,7 +44,7 @@ class SalesItemWidget extends StatelessWidget {
           children: [
             Container(
               width: 15,
-              height: 80,
+              height: 100,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.only(
                   topLeft: Radius.circular(10),
@@ -68,6 +69,7 @@ class SalesItemWidget extends StatelessWidget {
                   children: [
                     Expanded(
                       child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Image.asset(
                             'assets/icons/ic_bill.png',
@@ -79,7 +81,7 @@ class SalesItemWidget extends StatelessWidget {
                           Expanded(
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
-                              mainAxisAlignment: MainAxisAlignment.center,
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Text(
                                   '${sales.series}-${sales.billNumber}',
@@ -91,7 +93,7 @@ class SalesItemWidget extends StatelessWidget {
                                   ),
                                   maxLines: 1,
                                 ),
-                                Text(
+                                AutoSizeText(
                                   sales.customerName ?? '',
                                   style: TextStyle(
                                     fontSize: 13,
@@ -99,7 +101,7 @@ class SalesItemWidget extends StatelessWidget {
                                     color: Colors.white60,
                                     overflow: TextOverflow.ellipsis,
                                   ),
-                                  maxLines: 1,
+                                  maxLines: 2,
                                 ),
                                 Row(
                                   children: [
@@ -144,17 +146,19 @@ class SalesItemWidget extends StatelessWidget {
                             color: Colors.white,
                           ),
                         ),
-                        Text(
-                          sales.billDate?.toDDMMYYYY() ?? '',
-                          style: TextStyle(
-                            fontSize: 13,
-                            fontWeight: FontWeight.w400,
-                            color: Colors.white60,
+                        Expanded(
+                          child: Text(
+                            '',
+                            style: TextStyle(
+                              fontSize: 13,
+                              fontWeight: FontWeight.w400,
+                              color: Colors.white60,
+                            ),
                           ),
                         ),
                         Expanded(
                           child: Text(
-                            '',
+                            sales.billDate?.toDDMMYYYY() ?? '',
                             style: TextStyle(
                               fontSize: 13,
                               fontWeight: FontWeight.w400,

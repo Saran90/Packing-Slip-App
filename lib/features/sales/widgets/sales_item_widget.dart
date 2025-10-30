@@ -93,15 +93,17 @@ class SalesItemWidget extends StatelessWidget {
                                   ),
                                   maxLines: 1,
                                 ),
-                                AutoSizeText(
-                                  sales.customerName ?? '',
-                                  style: TextStyle(
-                                    fontSize: 13,
-                                    fontWeight: FontWeight.w500,
-                                    color: Colors.white60,
-                                    overflow: TextOverflow.ellipsis,
+                                Expanded(
+                                  child: AutoSizeText(
+                                    sales.customerName ?? '',
+                                    style: TextStyle(
+                                      fontSize: 13,
+                                      fontWeight: FontWeight.w500,
+                                      color: Colors.white60,
+                                      overflow: TextOverflow.ellipsis,
+                                    ),
+                                    maxLines: 2,
                                   ),
-                                  maxLines: 2,
                                 ),
                                 Row(
                                   children: [

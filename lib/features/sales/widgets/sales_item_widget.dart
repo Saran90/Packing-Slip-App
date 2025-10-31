@@ -17,7 +17,7 @@ class SalesItemWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Slidable(
+    return LayoutBuilder(builder: (context, constraints) => Slidable(
       enabled: !(sales.isImported ?? false),
       endActionPane: ActionPane(
         motion: ScrollMotion(),
@@ -32,7 +32,6 @@ class SalesItemWidget extends StatelessWidget {
         ],
       ),
       child: Container(
-        height: 100,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10),
           color: Colors.white10,
@@ -44,20 +43,19 @@ class SalesItemWidget extends StatelessWidget {
           children: [
             Container(
               width: 15,
-              height: 100,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.only(
                   topLeft: Radius.circular(10),
                   bottomLeft: Radius.circular(10),
                 ),
                 color:
-                    sales.isImported ?? false
-                        ? Colors.blue
-                        : (sales.status == 2)
-                        ? Colors.green
-                        : (sales.status == 1)
-                        ? Colors.orange
-                        : Colors.grey,
+                sales.isImported ?? false
+                    ? Colors.blue
+                    : (sales.status == 2)
+                    ? Colors.green
+                    : (sales.status == 1)
+                    ? Colors.orange
+                    : Colors.grey,
               ),
             ),
             Expanded(
@@ -83,51 +81,78 @@ class SalesItemWidget extends StatelessWidget {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                Text(
-                                  '${sales.series}-${sales.billNumber}',
-                                  style: TextStyle(
-                                    fontSize: 15,
-                                    fontWeight: FontWeight.w500,
-                                    color: Colors.white,
-                                    overflow: TextOverflow.ellipsis,
-                                  ),
-                                  maxLines: 1,
-                                ),
-                                Expanded(
-                                  child: AutoSizeText(
-                                    sales.customerName ?? '',
-                                    style: TextStyle(
-                                      fontSize: 13,
-                                      fontWeight: FontWeight.w500,
-                                      color: Colors.white60,
-                                      overflow: TextOverflow.ellipsis,
-                                    ),
-                                    maxLines: 3,
-                                  ),
-                                ),
                                 Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                   children: [
                                     Text(
-                                      'Cases',
+                                      '${sales.series}-${sales.billNumber}',
                                       style: TextStyle(
-                                        fontSize: 12,
-                                        fontWeight: FontWeight.w400,
-                                        color: Colors.white60,
-                                        overflow: TextOverflow.ellipsis,
-                                      ),
-                                      maxLines: 1,
-                                    ),
-                                    const SizedBox(width: 5),
-                                    Text(
-                                      sales.cases.toString(),
-                                      style: TextStyle(
-                                        fontSize: 13,
+                                        fontSize: 15,
                                         fontWeight: FontWeight.w500,
                                         color: Colors.white,
                                         overflow: TextOverflow.ellipsis,
                                       ),
                                       maxLines: 1,
                                     ),
+                                    Text(
+                                      '₹${sales.billAmount}',
+                                      style: TextStyle(
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.w500,
+                                        color: Colors.white,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                const SizedBox(height: 5,),
+                                AutoSizeText(
+                                  sales.customerName ?? '',
+                                  style: TextStyle(
+                                    fontSize: 13,
+                                    fontWeight: FontWeight.w500,
+                                    color: Colors.white60,
+                                    overflow: TextOverflow.ellipsis,
+                                  ),
+                                  maxLines: 3,
+                                ),
+                                const SizedBox(height: 5,),
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Row(
+                                      children: [
+                                        Text(
+                                          'Cases',
+                                          style: TextStyle(
+                                            fontSize: 12,
+                                            fontWeight: FontWeight.w400,
+                                            color: Colors.white60,
+                                            overflow: TextOverflow.ellipsis,
+                                          ),
+                                          maxLines: 1,
+                                        ),
+                                        const SizedBox(width: 5),
+                                        Text(
+                                          sales.cases.toString(),
+                                          style: TextStyle(
+                                            fontSize: 13,
+                                            fontWeight: FontWeight.w500,
+                                            color: Colors.white,
+                                            overflow: TextOverflow.ellipsis,
+                                          ),
+                                          maxLines: 1,
+                                        ),
+                                      ],
+                                    ),
+                                    const SizedBox(width: 20,),
+                                    Text(
+                                      sales.billDate?.toDDMMYYYY() ?? '',
+                                      style: TextStyle(
+                                        fontSize: 13,
+                                        fontWeight: FontWeight.w400,
+                                        color: Colors.white60,
+                                      ),
+                                    )
                                   ],
                                 ),
                               ],
@@ -136,40 +161,6 @@ class SalesItemWidget extends StatelessWidget {
                         ],
                       ),
                     ),
-                    const SizedBox(width: 20),
-                    Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          '₹${sales.billAmount}',
-                          style: TextStyle(
-                            fontSize: 18,
-                            fontWeight: FontWeight.w500,
-                            color: Colors.white,
-                          ),
-                        ),
-                        Expanded(
-                          child: Text(
-                            '',
-                            style: TextStyle(
-                              fontSize: 13,
-                              fontWeight: FontWeight.w400,
-                              color: Colors.white60,
-                            ),
-                          ),
-                        ),
-                        Expanded(
-                          child: Text(
-                            sales.billDate?.toDDMMYYYY() ?? '',
-                            style: TextStyle(
-                              fontSize: 13,
-                              fontWeight: FontWeight.w400,
-                              color: Colors.white60,
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
                   ],
                 ),
               ),
@@ -177,6 +168,6 @@ class SalesItemWidget extends StatelessWidget {
           ],
         ),
       ),
-    );
+    ),);
   }
 }
